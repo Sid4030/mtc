@@ -6,15 +6,69 @@ import "./BootcampAd.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const BootcampAd = () => {
+const BootcampAd = ({ introFinished }) => {
   const adRef = useRef(null);
   const leftPeekRef = useRef(null);
   const rightPeekRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [branchStep, setBranchStep] = useState(0);
+  const [isBannerOpen, setIsBannerOpen] = useState(false);
+  const [isAnimatingBanner, setIsAnimatingBanner] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (introFinished) {
+      setIsBannerOpen(true);
+    }
+  }, [introFinished]);
+
+  useEffect(() => {
+    if (isBannerOpen) {
+      document.body.style.overflow = 'hidden';
+      setIsAnimatingBanner(true);
+      gsap.killTweensOf(adRef.current);
+      
+      const rect = adRef.current.getBoundingClientRect();
+      const elCenterX = rect.left + rect.width / 2;
+      const elCenterY = rect.top + rect.height / 2;
+      
+      const targetX = window.innerWidth / 2;
+      const targetY = window.innerHeight / 2;
+      
+      const deltaX = targetX - elCenterX;
+      const deltaY = targetY - elCenterY;
+
+      gsap.to(adRef.current, {
+        x: "+=" + deltaX,
+        y: "+=" + deltaY,
+        rotation: 0,
+        scale: window.innerWidth > 768 ? 1.3 : 1.15,
+        zIndex: 10000,
+        duration: 0.8,
+        ease: "expo.out",
+        onComplete: () => setIsAnimatingBanner(false)
+      });
+    } else if (!isBannerOpen && introFinished) {
+      document.body.style.overflow = '';
+      setIsAnimatingBanner(true);
+      gsap.killTweensOf(adRef.current);
+      
+      gsap.to(adRef.current, {
+        x: window.innerWidth > 768 ? 0 : "65%",
+        y: 0,
+        rotation: window.innerWidth > 768 ? 0 : -4,
+        scale: 1,
+        zIndex: 100,
+        duration: 0.8,
+        ease: "power3.inOut",
+        onComplete: () => setIsAnimatingBanner(false)
+      });
+    }
+  }, [isBannerOpen, introFinished]);
+
+  useEffect(() => {
+    if (isBannerOpen || isAnimatingBanner) return;
+
     const mm = gsap.matchMedia();
     
     // Desktop: roaming/floating animation
@@ -65,7 +119,7 @@ const BootcampAd = () => {
       mm.revert();
       hideTrigger.kill();
     };
-  }, [isHovered]);
+  }, [isHovered, isBannerOpen, isAnimatingBanner]);
 
   useEffect(() => {
     if (branchStep === 1) {
@@ -84,12 +138,23 @@ const BootcampAd = () => {
   return (
     <>
       <div 
-        className="bootcamp-ad-container" 
+        className={`bootcamp-ad-overlay ${isBannerOpen ? 'visible' : ''}`} 
+        onClick={() => setIsBannerOpen(false)}
+      ></div>
+
+      <div 
+        className={`bootcamp-ad-container ${isBannerOpen ? 'is-banner' : ''}`} 
         ref={adRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setIsHovered(!isHovered)}
+        onMouseEnter={() => !isBannerOpen && setIsHovered(true)}
+        onMouseLeave={() => !isBannerOpen && setIsHovered(false)}
+        onClick={() => !isBannerOpen && setIsHovered(!isHovered)}
       >
+        <button 
+          className="bootcamp-ad-close" 
+          onClick={(e) => { e.stopPropagation(); setIsBannerOpen(false); }}
+        >
+          X
+        </button>
         <div className="bootcamp-ad-card">
           <svg className="bootcamp-ad-svg-1" width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M50 0L61.2257 38.7743L100 50L61.2257 61.2257L50 100L38.7743 61.2257L0 50L38.7743 38.7743L50 0Z" fill="#FFF48D" stroke="#1D1C1C" strokeWidth="5" strokeLinejoin="round"/>

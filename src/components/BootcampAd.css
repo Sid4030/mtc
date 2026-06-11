@@ -213,3 +213,57 @@
     width: 250px;
   }
 }
+
+.bootcamp-ad-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.bootcamp-ad-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bootcamp-ad-close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: #1D1C1C;
+  color: #FFF;
+  border: 3px solid #FFF;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 4px 4px 0px #1D1C1C;
+  transition: all 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bootcamp-ad-close:hover {
+  transform: scale(1.1);
+  background: #FFDF00;
+  color: #1D1C1C;
+}
+
+.bootcamp-ad-container.is-banner .bootcamp-ad-close {
+  opacity: 1;
+  pointer-events: auto;
+}

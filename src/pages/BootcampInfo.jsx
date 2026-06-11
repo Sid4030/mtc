@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './BootcampInfo.css';
+import BootcampHighlights from '../components/BootcampHighlights';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +23,88 @@ const BootcampInfo = () => {
   const containerRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [expandedCard, setExpandedCard] = useState(null);
+  const [cardBounds, setCardBounds] = useState(null);
+  const [contentVisible, setContentVisible] = useState(false);
+  const overlayRef = useRef(null);
+  const expandedCardRef = useRef(null);
+
+  const handleCardClick = (session, index, event) => {
+    if (expandedCard) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    setCardBounds(rect);
+    setExpandedCard({ ...session, index });
+  };
+
+  const closeExpandedCard = () => {
+    if (!expandedCardRef.current || !cardBounds) return;
+    setContentVisible(false);
+    gsap.to(expandedCardRef.current, {
+      top: cardBounds.top,
+      left: cardBounds.left,
+      width: cardBounds.width,
+      height: cardBounds.height,
+      duration: 0.4,
+      ease: "power3.inOut",
+      onComplete: () => {
+        setExpandedCard(null);
+        setCardBounds(null);
+      }
+    });
+    gsap.to(overlayRef.current, {
+      opacity: 0,
+      duration: 0.4,
+      ease: "power3.inOut"
+    });
+  };
+
+  useEffect(() => {
+    if (expandedCard && expandedCardRef.current && cardBounds) {
+      document.body.style.overflow = 'hidden';
+      
+      // Set initial state matching exactly the clicked card's bounds
+      gsap.set(expandedCardRef.current, {
+        position: 'fixed',
+        top: cardBounds.top,
+        left: cardBounds.left,
+        width: cardBounds.width,
+        height: cardBounds.height,
+        zIndex: 10001,
+        margin: 0,
+        xPercent: 0,
+        yPercent: 0
+      });
+
+      // Calculate destination bounds (centered)
+      const isMobile = window.innerWidth <= 768;
+      const destWidth = isMobile ? window.innerWidth * 0.9 : window.innerWidth * 0.6;
+      const destHeight = isMobile ? window.innerHeight * 0.8 : window.innerHeight * 0.7;
+      const destTop = (window.innerHeight - destHeight) / 2;
+      const destLeft = (window.innerWidth - destWidth) / 2;
+
+      // Animate to center bounds
+      gsap.to(expandedCardRef.current, {
+        top: destTop,
+        left: destLeft,
+        width: destWidth,
+        height: destHeight,
+        duration: 0.5,
+        ease: "power3.inOut",
+        onComplete: () => setContentVisible(true)
+      });
+
+      gsap.fromTo(overlayRef.current, 
+        { opacity: 0 }, 
+        { opacity: 1, duration: 0.5, ease: "power3.inOut" }
+      );
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    // Cleanup if component unmounts while modal is open
+    return () => { document.body.style.overflow = ''; };
+  }, [expandedCard]);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -192,9 +275,9 @@ const BootcampInfo = () => {
       <div className="sketch-blueprint-bg">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            {/* Lightweight sketchy grid */}
-            <pattern id="sketch-grid" width="100" height="100" patternUnits="userSpaceOnUse">
-              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="2" strokeLinecap="round" strokeDasharray="5, 8" />
+            {/* High density sketchy grid */}
+            <pattern id="sketch-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+              <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="2" strokeLinecap="round" strokeDasharray="4, 6" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#sketch-grid)" />
@@ -244,6 +327,9 @@ const BootcampInfo = () => {
         </div>
       </section>
 
+      {/* Kinetic Typography Highlights Section */}
+      <BootcampHighlights />
+
       {/* Sticky Horizontal Scroll Cards Section */}
       <section className="info-cards-container">
         {/* Floating Sketch Components in Scroll Area */}
@@ -259,22 +345,22 @@ const BootcampInfo = () => {
           <div className="info-card card-1">
             <div className="card-image bg-1"></div>
             <div className="card-content">
-              <h2>01. LEARN & GROW</h2>
-              <p>Immerse yourself in cutting-edge Azure AI technologies using free student subscriptions. No credit card needed.</p>
+              <h2>01. 8 LIVE SESSIONS</h2>
+              <p>Join Microsoft MVPs and Student Ambassadors for 8 interactive sessions covering Azure AI fundamentals, Copilot Studio, and more.</p>
             </div>
           </div>
           <div className="info-card card-2">
             <div className="card-image bg-2"></div>
             <div className="card-content">
-              <h2>02. SHIP PRODUCTS</h2>
-              <p>Build sentiment analyzers, voice apps, and RAG chatbots. Deploy them instantly with Azure Static Web Apps.</p>
+              <h2>02. 9 REAL PROJECTS</h2>
+              <p>Build 8 mini-projects and 1 mega Capstone project to add to your resume. Get hands-on experience with real-world AI use cases.</p>
             </div>
           </div>
           <div className="info-card card-3">
             <div className="card-image bg-3"></div>
             <div className="card-content">
-              <h2>03. CAPSTONE</h2>
-              <p>Complete the 8-session series and submit a real-world tool using at least 3 AI services to get featured globally.</p>
+              <h2>03. WIN INTERNSHIPS</h2>
+              <p>Top performers will be rewarded with internships at Kapidhwaj Innovations and exclusive Microsoft Tech Community swag kits.</p>
             </div>
           </div>
         </div>
@@ -347,10 +433,16 @@ const BootcampInfo = () => {
         <div className="timeline-container" style={{ position: 'relative', zIndex: 10 }}>
           <div className="timeline-central-line"></div>
           
-          {bootcampSessions.map((session, index) => (
+          {bootcampSessions.map((session, index) => {
+            const isCapstone = index === bootcampSessions.length - 1;
+            return (
             <div key={index} className={`timeline-card-wrapper ${index % 2 === 0 ? 'left' : 'right'}`}>
-              <div className="timeline-point">{session.num}</div>
-              <div className="timeline-card">
+              <div className="timeline-point" style={isCapstone ? { background: 'linear-gradient(45deg, #ff9a9e, #fd74fd)', border: 'none', boxShadow: '0 0 20px rgba(253, 116, 253, 0.6)' } : {}}>{session.num}</div>
+              <div 
+                className={`timeline-card ${isCapstone ? 'capstone-card' : ''}`} 
+                onClick={(e) => handleCardClick(session, index, e)}
+                style={{ opacity: expandedCard?.index === index ? 0 : 1, cursor: 'pointer' }}
+              >
                 <div className="tl-card-header">
                   <h3>{session.title}</h3>
                   <span className="tl-badge">{session.service}</span>
@@ -361,13 +453,52 @@ const BootcampInfo = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
         
         <div className="timeline-footer" style={{ position: 'relative', zIndex: 10 }}>
           <button className="info-huge-register-btn mythical-hero-btn" onClick={() => navigate('/Bootcamp')}>JOIN THE BOOTCAMP</button>
         </div>
       </section>
+
+      {/* Expanded Roadmap Card Overlay */}
+      {expandedCard && (
+        <div className="expanded-card-backdrop" ref={overlayRef} onClick={closeExpandedCard} style={{ position: 'fixed', inset: 0, background: 'rgba(5, 5, 5, 0.8)', backdropFilter: 'blur(8px)', zIndex: 10000, opacity: 0 }}>
+          <div className="timeline-card expanded" ref={expandedCardRef} onClick={e => e.stopPropagation()} style={{ background: '#fff', border: '4px solid #1d1c1c', borderRadius: '16px', boxShadow: '8px 8px 0 #1d1c1c', padding: contentVisible ? '3rem' : '2rem', position: 'fixed', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+            
+            {contentVisible ? (
+              <div style={{ opacity: 1, transition: 'opacity 0.3s ease', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <button onClick={closeExpandedCard} style={{ position: 'absolute', top: '15px', right: '15px', background: '#1d1c1c', color: '#fff', border: 'none', width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem', transition: 'all 0.2s ease', zIndex: 10 }}>X</button>
+                <div className="tl-badge" style={{ alignSelf: 'flex-start', marginBottom: '1rem', fontSize: '1rem' }}>{expandedCard.service}</div>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 900, color: '#1d1c1c', textTransform: 'uppercase', marginBottom: '1.5rem' }}>{expandedCard.title}</h2>
+                <div style={{ flex: 1 }}>
+                  <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '1rem' }}>About Session</h4>
+                  <p style={{ color: '#444', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>Dive deep into {expandedCard.title} and discover how to leverage {expandedCard.service} effectively. We will walk through the core concepts, discuss best practices, and lay the foundation for your project.</p>
+                  
+                  <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '1rem' }}>About Project</h4>
+                  <p style={{ color: '#444', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>{expandedCard.desc}</p>
+                </div>
+                
+                <div style={{ marginTop: 'auto', paddingTop: '2rem', borderTop: '2px solid rgba(0,0,0,0.1)' }}>
+                  <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', cursor: 'not-allowed', filter: 'grayscale(0.8)', border: 'none' }}>Session Link: Coming Soon</button>
+                </div>
+              </div>
+            ) : (
+              <div style={{ opacity: 1 }}>
+                <div className="tl-card-header">
+                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '1.8rem', fontWeight: 900, color: '#1d1c1c', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{expandedCard.title}</h3>
+                  <span className="tl-badge">{expandedCard.service}</span>
+                </div>
+                <div className="tl-card-body">
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1d1c1c', marginBottom: '0.5rem' }}>Mini Project: <span style={{ color: '#fd74fd' }}>{expandedCard.project}</span></h4>
+                  <p style={{ color: '#444', fontSize: '1rem', lineHeight: 1.5 }}>{expandedCard.desc}</p>
+                </div>
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

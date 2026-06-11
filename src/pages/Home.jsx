@@ -180,7 +180,7 @@ const Home = () => {
       )}
 
       <div id="page1">
-        <BootcampAd />
+        <BootcampAd introFinished={introFinished} />
         <div className="hero-grid-modern">
           <div className="hero-grid-left">
             <h1 className="hero-huge-title">

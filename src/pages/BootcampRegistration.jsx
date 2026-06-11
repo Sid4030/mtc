@@ -9,13 +9,17 @@ const BootcampRegistration = () => {
   const formRef = useRef(null);
   const boardRef = useRef(null);
   const hoverAdRef = useRef(null);
+  const modalRef = useRef(null);
   const navigate = useNavigate();
 
   // Form State
   const [formData, setFormData] = useState({
-    name: '', email: '', university: '', year: ''
+    name: '', email: '', contactNumber: '', collegeType: '', enrollmentNo: '',
+    collegeName: '', courseName: '', specialisation: '', year: '',
+    linkedinUrl: '', githubUrl: '', motivation: ''
   });
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -56,6 +60,15 @@ const BootcampRegistration = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (showSuccess && modalRef.current) {
+      gsap.fromTo(modalRef.current, 
+        { scale: 0.8, opacity: 0, y: 50 }, 
+        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" }
+      );
+    }
+  }, [showSuccess]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -71,10 +84,12 @@ const BootcampRegistration = () => {
       if (response.ok) {
         gsap.to(boardRef.current, {
           scale: 0.9, opacity: 0, duration: 0.4, onComplete: () => {
-            alert("Registration Successful! Welcome to the Bootcamp.");
-            navigate("/");
+            setShowSuccess(true);
           }
         });
+        if (hoverAdRef.current) {
+          gsap.to(hoverAdRef.current, { opacity: 0, duration: 0.4 });
+        }
       } else {
         alert(`Error: ${data.error}`);
       }
@@ -128,57 +143,138 @@ const BootcampRegistration = () => {
           </svg>
         </div>
 
+        {/* Success Modal Overlay */}
+        {showSuccess && (
+          <div className="success-modal-overlay">
+            <div className="success-modal-box" ref={modalRef}>
+              <div className="success-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <h2 className="success-title">Thank You!</h2>
+              <p className="success-message">
+                Your application has been successfully submitted. We appreciate your interest in the Bootcamp and a copy of your details has been sent to your email.
+              </p>
+              <p className="success-message highlight">
+                Please join our official WhatsApp group to receive all event updates, links, and announcements.
+              </p>
+              <div className="success-actions">
+                <a href="https://chat.whatsapp.com/your-group-link-here" target="_blank" rel="noreferrer" className="whatsapp-btn">
+                  Join WhatsApp Group
+                </a>
+                <button onClick={() => navigate("/")} className="return-home-btn">
+                  Return to Home
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Main Registration Board */}
-        <div className="bootcamp-reg-board" ref={boardRef}>
-          <div className="bootcamp-reg-badge">JOIN THE CLOUD</div>
-          
-          <h1 className="bootcamp-reg-title" ref={titleRef}>
-            Bootcamp <br/> <span className="highlight-text sketch-text">Registration</span>
-          </h1>
-          
-          <p className="bootcamp-reg-subtitle">
-            Secure your spot in the Microsoft Tech Community. No credit card needed.
-          </p>
+        {!showSuccess && (
+          <div className="bootcamp-reg-board" ref={boardRef}>
+            <div className="bootcamp-reg-badge">JOIN THE CLOUD</div>
+            
+            <h1 className="bootcamp-reg-title" ref={titleRef}>
+              Bootcamp <br/> <span className="highlight-text sketch-text">Registration</span>
+            </h1>
+            
+            <p className="bootcamp-reg-subtitle">
+              Secure your spot in the Microsoft Tech Community. No credit card needed.
+            </p>
 
-          <form className="bootcamp-reg-form" ref={formRef} onSubmit={handleSubmit}>
-            <div className="bootcamp-reg-input-group">
-              <label>Full Name</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" required />
-            </div>
+            <form className="bootcamp-reg-form" ref={formRef} onSubmit={handleSubmit}>
+              <div className="bootcamp-reg-input-group">
+                <label>Full Name</label>
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" required />
+              </div>
 
-            <div className="bootcamp-reg-input-group">
-              <label>Email Address</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required />
-            </div>
+              <div className="bootcamp-reg-input-group">
+                <label>Email Address</label>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required />
+              </div>
 
-            <div className="bootcamp-reg-input-group">
-              <label>University / College</label>
-              <input type="text" name="university" value={formData.university} onChange={handleChange} placeholder="Tech University" required />
-            </div>
+              <div className="bootcamp-reg-input-group">
+                <label>Contact Number (WhatsApp)</label>
+                <input type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="+91 9876543210" required />
+              </div>
 
-            <div className="bootcamp-reg-input-group">
-              <label>Year of Study</label>
-              <select name="year" value={formData.year} onChange={handleChange} required>
-                <option value="" disabled>Select Year</option>
-                <option value="1">1st Year</option>
-                <option value="2">2nd Year</option>
-                <option value="3">3rd Year</option>
-                <option value="4">4th Year</option>
-              </select>
-            </div>
+              <div className="bootcamp-reg-input-group">
+                <label>College</label>
+                <select name="collegeType" value={formData.collegeType} onChange={handleChange} required>
+                  <option value="" disabled>Select College</option>
+                  <option value="Amity">Amity University</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
 
-            <button type="submit" className="bootcamp-reg-submit bw-btn" disabled={loading}>
-              {loading ? "Processing..." : "Submit Application"}
-            </button>
-          </form>
-        </div>
+              {formData.collegeType === 'Amity' && (
+                <div className="bootcamp-reg-input-group">
+                  <label>Enrollment No.</label>
+                  <input type="text" name="enrollmentNo" value={formData.enrollmentNo} onChange={handleChange} placeholder="A123456789" required />
+                </div>
+              )}
+
+              {formData.collegeType === 'Other' && (
+                <div className="bootcamp-reg-input-group">
+                  <label>College Name</label>
+                  <input type="text" name="collegeName" value={formData.collegeName} onChange={handleChange} placeholder="Tech University" required />
+                </div>
+              )}
+
+              <div className="bootcamp-reg-input-group">
+                <label>Course Name</label>
+                <input type="text" name="courseName" value={formData.courseName} onChange={handleChange} placeholder="e.g. BTech, BCA" required />
+              </div>
+
+              <div className="bootcamp-reg-input-group">
+                <label>Specialisation</label>
+                <input type="text" name="specialisation" value={formData.specialisation} onChange={handleChange} placeholder="e.g. CSE, Data Science" required />
+              </div>
+
+              <div className="bootcamp-reg-input-group">
+                <label>Year of Study</label>
+                <select name="year" value={formData.year} onChange={handleChange} required>
+                  <option value="" disabled>Select Year</option>
+                  <option value="1">1st Year</option>
+                  <option value="2">2nd Year</option>
+                  <option value="3">3rd Year</option>
+                  <option value="4">4th Year</option>
+                </select>
+              </div>
+
+              <div className="bootcamp-reg-input-group">
+                <label>LinkedIn URL</label>
+                <input type="url" name="linkedinUrl" value={formData.linkedinUrl} onChange={handleChange} placeholder="https://linkedin.com/in/username" required />
+              </div>
+
+              <div className="bootcamp-reg-input-group">
+                <label>Github URL</label>
+                <input type="url" name="githubUrl" value={formData.githubUrl} onChange={handleChange} placeholder="https://github.com/username" required />
+              </div>
+
+              <div className="bootcamp-reg-input-group">
+                <label>Motivation to Join</label>
+                <textarea name="motivation" value={formData.motivation} onChange={handleChange} placeholder="Why do you want to join this bootcamp?" rows="3" style={{width: '100%', padding: '12px', background: '#F4F4F0', border: '3px solid #1D1C1C', borderRadius: '8px', color: '#1D1C1C', fontFamily: "'DM Sans', sans-serif", fontSize: '0.9rem', outline: 'none', resize: 'vertical'}} required></textarea>
+              </div>
+
+              <button type="submit" className="bootcamp-reg-submit bw-btn" disabled={loading}>
+                {loading ? "Processing..." : "Submit Application"}
+              </button>
+            </form>
+          </div>
+        )}
 
         {/* Floating Info Ad Board (Static on mobile) */}
-        <div className="reg-hover-ad" ref={hoverAdRef} onClick={() => navigate('/Bootcamp-info')}>
-          <div className="hover-ad-badge">INFO</div>
-          <p>Want to know about this event?</p>
-          <button className="hover-ad-btn">Click Here</button>
-        </div>
+        {!showSuccess && (
+          <div className="reg-hover-ad" ref={hoverAdRef} onClick={() => navigate('/Bootcamp-info')}>
+            <div className="hover-ad-badge">INFO</div>
+            <p>Want to know about this event?</p>
+            <button className="hover-ad-btn">Click Here</button>
+          </div>
+        )}
       </div>
 
     </div>
