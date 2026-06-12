@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import gsap from 'gsap';
+import './BootcampRegistration.css'; // Importing the exact same CSS used for the main website
 
 const AdminPanel = () => {
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState(localStorage.getItem('adminToken') || '');
+  const [token, setToken] = useState(sessionStorage.getItem('adminToken') || '');
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -30,11 +31,37 @@ const AdminPanel = () => {
     }
   }, [token]);
 
-  // Simple Entrance Animation
+  // Auto-logout after 5 minutes of inactivity
+  useEffect(() => {
+    if (!token) return;
+    
+    let timeoutId;
+    const resetTimer = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        handleLogout();
+        setError('Session expired due to inactivity.');
+      }, 5 * 60 * 1000); // 5 minutes
+    };
+
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+    window.addEventListener('click', resetTimer);
+    resetTimer();
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keydown', resetTimer);
+      window.removeEventListener('click', resetTimer);
+    };
+  }, [token]);
+
+  // Entrance Animation
   useEffect(() => {
     gsap.fromTo(".admin-fade-in", 
-      { opacity: 0, y: 30 }, 
-      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.1 }
+      { opacity: 0, y: 50 }, 
+      { opacity: 1, y: 0, duration: 1, ease: "power4.out", stagger: 0.1 }
     );
   }, [token]);
 
@@ -73,7 +100,7 @@ const AdminPanel = () => {
       const data = await response.json();
       if (response.ok) {
         setToken(data.token);
-        localStorage.setItem('adminToken', data.token);
+        sessionStorage.setItem('adminToken', data.token);
       } else {
         setError(data.error || 'Login failed');
       }
@@ -87,7 +114,7 @@ const AdminPanel = () => {
   const handleLogout = () => {
     setToken('');
     setRegistrations([]);
-    localStorage.removeItem('adminToken');
+    sessionStorage.removeItem('adminToken');
   };
 
   const exportToCSV = () => {
@@ -124,140 +151,137 @@ const AdminPanel = () => {
 
   if (!token) {
     return (
-      <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4 relative overflow-hidden font-['Gilroy',sans-serif]">
-        {/* Background Accents */}
-        <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-[#00a4ef]/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] bg-[#f25022]/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-        <div className="admin-fade-in max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-2xl shadow-2xl relative z-10">
-          <div className="mb-8 text-center">
-            <div className="inline-block px-3 py-1 mb-4 border border-white/20 rounded-full text-xs font-bold tracking-[0.2em] text-[#00a4ef] uppercase">
-              Secure Access
-            </div>
-            <h2 className="text-3xl font-black text-white tracking-tight">Admin Portal</h2>
-            <p className="text-gray-400 mt-2 text-sm">Please authenticate to view registrations</p>
+      <div className="bootcamp-reg-page bw-theme">
+        <div className="bootcamp-reg-content-wrapper" style={{ maxWidth: '450px' }}>
+          {/* Floating Background Shapes */}
+          <div style={{ position: 'absolute', top: '-10%', left: '-20%', width: '140%', height: '120%', zIndex: -1, pointerEvents: 'none' }}>
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 50 100 Q 150 50 200 150 T 300 100" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="4" />
+              <circle cx="10%" cy="80%" r="40" fill="none" stroke="rgba(253, 116, 253, 0.15)" strokeWidth="2" strokeDasharray="5 5" />
+            </svg>
           </div>
 
-          {error && <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm text-center">{error}</div>}
+          <div className="bootcamp-reg-board admin-fade-in">
+            <div className="bootcamp-reg-badge" style={{ background: 'linear-gradient(45deg, #f25022, #ffb900)' }}>RESTRICTED</div>
+            
+            <h1 className="bootcamp-reg-title" style={{ fontSize: 'clamp(2rem, 8vw, 2.5rem)' }}>
+              Admin <br/> <span className="highlight-text sketch-text">Login</span>
+            </h1>
+            
+            <p className="bootcamp-reg-subtitle" style={{ marginBottom: '2rem' }}>
+              High-level clearance required.
+            </p>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label className="block text-gray-300 text-xs font-bold uppercase tracking-wider mb-2">Master Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#00a4ef] focus:ring-1 focus:ring-[#00a4ef] transition-all"
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-white text-black font-bold py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 tracking-wide uppercase text-sm"
-            >
-              {loading ? 'Authenticating...' : 'Enter System'}
-            </button>
-          </form>
+            {error && <div className="bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm p-3 mb-4">{error}</div>}
+
+            <form className="bootcamp-reg-form" onSubmit={handleLogin}>
+              <div className="bootcamp-reg-input-group">
+                <label>Master Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter system password"
+                  autoComplete="new-password"
+                  required
+                />
+              </div>
+              
+              <button type="submit" className="bootcamp-reg-submit bw-btn" disabled={loading}>
+                {loading ? 'Authenticating...' : 'Access Portal'}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#f0f0f0] font-['Gilroy',sans-serif] relative overflow-x-hidden pt-[140px] pb-20 px-4 md:px-8">
-      {/* Background ambient lighting */}
-      <div className="fixed top-0 left-[20%] w-[50vw] h-[50vh] bg-[#00a4ef]/5 rounded-full blur-[150px] pointer-events-none z-0"></div>
-      
-      <div className="max-w-[1400px] mx-auto relative z-10">
-        {/* Header Section */}
-        <div className="admin-fade-in flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6 border-b border-white/10 pb-6">
-          <div>
-            <div className="inline-block px-3 py-1 mb-3 border border-white/20 rounded-full text-xs font-bold tracking-[0.2em] text-[#7fba00] uppercase">
-              Live Dashboard
-            </div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">Registration Data</h1>
-            <p className="text-gray-400 mt-2">Total signups: {registrations.length}</p>
-          </div>
+    <div className="bootcamp-reg-page bw-theme" style={{ alignItems: 'flex-start', overflowY: 'auto' }}>
+      <div className="bootcamp-reg-content-wrapper" style={{ maxWidth: '1300px', width: '100%', padding: '0' }}>
+        
+        <div className="bootcamp-reg-board admin-fade-in" style={{ padding: 'clamp(1rem, 3vw, 2.5rem)' }}>
+          <div className="bootcamp-reg-badge" style={{ background: 'linear-gradient(45deg, #7fba00, #a1eb00)', color: '#050505' }}>LIVE DATA</div>
           
-          <div className="flex flex-wrap gap-4">
-            <button
-              onClick={exportToCSV}
-              className="bg-[#7fba00] hover:bg-[#8fd300] text-black font-bold px-6 py-2.5 rounded-lg transition-colors flex items-center gap-2 text-sm uppercase tracking-wide"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-              Export CSV
-            </button>
-            <button
-              onClick={handleLogout}
-              className="bg-transparent border border-white/20 hover:bg-white/10 text-white font-bold px-6 py-2.5 rounded-lg transition-colors text-sm uppercase tracking-wide"
-            >
-              Logout
-            </button>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6 border-b border-white/10 pb-6">
+            <div>
+              <h1 className="bootcamp-reg-title" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', marginBottom: '0.5rem' }}>
+                <span className="highlight-text sketch-text">Registrations</span> <br className="md:hidden" /> Dashboard
+              </h1>
+              <p className="bootcamp-reg-subtitle" style={{ margin: 0 }}>
+                Total Verified Signups: <strong className="text-white text-lg">{registrations.length}</strong>
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap gap-4">
+              <button onClick={exportToCSV} className="bootcamp-reg-submit bw-btn" style={{ margin: 0, padding: '12px 24px', fontSize: '0.9rem', background: 'linear-gradient(45deg, #7fba00, #a1eb00)' }}>
+                Export CSV
+              </button>
+              <button onClick={handleLogout} className="return-home-btn" style={{ margin: 0, padding: '12px 24px' }}>
+                End Session
+              </button>
+            </div>
           </div>
-        </div>
 
-        {error && <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-lg mb-8">{error}</div>}
+          {error && <div className="bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm p-4 mb-6">{error}</div>}
 
-        {/* Data Table */}
-        <div className="admin-fade-in bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto rounded-xl border border-white/10" style={{ background: 'rgba(5, 5, 5, 0.6)' }}>
+            <table className="w-full text-left border-collapse text-white font-['DM_Sans',sans-serif]">
               <thead>
-                <tr className="bg-black/40 border-b border-white/10">
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Candidate Info</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">College & Course</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Links</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider hidden md:table-cell">Motivation</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Date</th>
+                <tr className="bg-white/5 border-b border-white/10">
+                  <th className="px-5 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Candidate Info</th>
+                  <th className="px-5 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">College & Course</th>
+                  <th className="px-5 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Links</th>
+                  <th className="px-5 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider hidden md:table-cell">Motivation</th>
+                  <th className="px-5 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Date</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {loading && registrations.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="px-6 py-16 text-center text-gray-400">Loading secure data...</td>
+                    <td colSpan="5" className="px-5 py-16 text-center text-gray-400">Loading secure data...</td>
                   </tr>
                 ) : registrations.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="px-6 py-16 text-center text-gray-400">No registrations found yet.</td>
+                    <td colSpan="5" className="px-5 py-16 text-center text-gray-400">No registrations found yet.</td>
                   </tr>
                 ) : (
                   registrations.map((reg) => (
-                    <tr key={reg._id} className="hover:bg-white/[0.02] transition-colors group">
-                      <td className="px-6 py-5">
-                        <div className="text-base font-bold text-white group-hover:text-[#00a4ef] transition-colors">{reg.name}</div>
+                    <tr key={reg._id} className="hover:bg-white/[0.03] transition-colors">
+                      <td className="px-5 py-4">
+                        <div className="text-base font-bold text-white">{reg.name}</div>
                         <div className="text-sm text-gray-400 mt-1">{reg.email}</div>
                         <div className="text-sm text-gray-500 mt-0.5">{reg.contactNumber}</div>
                       </td>
-                      <td className="px-6 py-5">
+                      <td className="px-5 py-4">
                         <div className="text-sm font-semibold text-gray-200">
                           {reg.collegeType === 'Amity' ? 'Amity University' : reg.collegeName}
                         </div>
                         {reg.enrollmentNo && <div className="text-xs text-gray-500 mt-1">ID: {reg.enrollmentNo}</div>}
                         <div className="text-xs text-gray-400 mt-1">
-                          <span className="text-[#ffb900]">{reg.courseName}</span> • {reg.specialisation} <br/>
+                          <span className="text-[#00a4ef] font-semibold">{reg.courseName}</span> • {reg.specialisation} <br/>
                           (Year {reg.year})
                         </div>
                       </td>
-                      <td className="px-6 py-5">
+                      <td className="px-5 py-4">
                         <div className="flex flex-col gap-2">
-                          <a href={reg.linkedinUrl} target="_blank" rel="noreferrer" className="text-xs font-bold text-[#00a4ef] hover:text-white transition-colors bg-[#00a4ef]/10 px-3 py-1 rounded-full inline-block w-max">
+                          <a href={reg.linkedinUrl} target="_blank" rel="noreferrer" className="text-xs font-bold text-[#00a4ef] hover:underline bg-[#00a4ef]/10 px-3 py-1 rounded-full inline-block w-max">
                             LinkedIn ↗
                           </a>
                           {reg.githubUrl && (
-                            <a href={reg.githubUrl} target="_blank" rel="noreferrer" className="text-xs font-bold text-gray-300 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full inline-block w-max">
+                            <a href={reg.githubUrl} target="_blank" rel="noreferrer" className="text-xs font-bold text-gray-300 hover:underline bg-white/10 px-3 py-1 rounded-full inline-block w-max">
                               GitHub ↗
                             </a>
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-5 hidden md:table-cell">
-                        <div className="text-sm text-gray-400 max-w-xs leading-relaxed line-clamp-3">
+                      <td className="px-5 py-4 hidden md:table-cell">
+                        <div className="text-sm text-gray-400 max-w-xs leading-relaxed line-clamp-3" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                           {reg.motivation}
                         </div>
                       </td>
-                      <td className="px-6 py-5 whitespace-nowrap text-sm font-medium text-gray-500">
+                      <td className="px-5 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
                         {new Date(reg.registrationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </td>
                     </tr>

@@ -44,10 +44,11 @@ const MainPage = () => {
 const GlobalOverlays = () => {
   const { pathname } = useLocation();
   const hideGlobe = pathname.startsWith('/Bootcamp') || pathname.startsWith('/kaju');
+  const hideNavbar = pathname.startsWith('/kaju');
   
   return (
     <>
-      <Navbar />
+      {!hideNavbar && <Navbar />}
       {!hideGlobe && <Globe />}
     </>
   );
