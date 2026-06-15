@@ -136,51 +136,121 @@ app.post('/api/register', async (req, res) => {
           from: `"Microsoft Tech Community" <${process.env.EMAIL_USER}>`,
           replyTo: process.env.EMAIL_USER,
           to: email,
-          subject: 'Successfully Registered for Microsoft Tech Community Bootcamp',
-          text: `Hello ${name},\n\nYour application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you!\n\nJoin the official WhatsApp group for event details or any queries: https://chat.whatsapp.com/\n\nSee you there!`,
+          subject: `Bootcamp Registration Confirmed: ${name} [${new Date().toLocaleTimeString()}]`,
+          text: `Hello ${name},\n\nYour application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you!\n\nJoin the official WhatsApp group for event details or any queries: https://chat.whatsapp.com/LpzfCa69X0T01YaWdjYrlT?s=sh&p=i&ilr=0&amv=2\n\nSee you there!`,
           html: `
             <!DOCTYPE html>
             <html>
             <head>
               <meta charset="utf-8">
             </head>
-            <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; padding: 40px 20px; margin: 0; color: #333333;">
-              <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 40px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                <div style="text-align: center; margin-bottom: 30px;">
-                  <h2 style="color: #00a4ef; margin: 0; font-size: 24px;">Microsoft Tech Community</h2>
+            <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f0518; background-image: radial-gradient(circle at top center, #2b124c 0%, #0f0518 80%); padding: 40px 20px; margin: 0; color: #ffffff;">
+              
+              <!-- Logo Section -->
+              <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="margin: 0; line-height: 48px;">
+                  <img src="https://res.cloudinary.com/dkdvmchfi/image/upload/v1781550670/Logo-microsoft-transparent-background-PNG_remaac.png" height="44" alt="Microsoft" style="vertical-align: middle; margin-right: 8px; padding-bottom: 3px;">
+                  <span style="vertical-align: middle; color: #ffffff; font-weight: bold; font-size: 26px;">Tech Community</span>
+                </h2>
+              </div>
+
+              <div style="max-width: 500px; margin: 0 auto; background-color: #111113; border-radius: 16px; padding: 40px; border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+                
+                <!-- Animated Rocket GIF -->
+                <div style="text-align: center; margin-bottom: 20px;">
+                  <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif" alt="Rocket" style="width: 100px; height: 100px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));" />
                 </div>
+
+                <h1 style="color: #ffffff; font-size: 26px; margin: 0 0 15px 0; text-align: left;">
+                  You're on the list!<span style="color: #2ea043; font-size: 26px;">&bull;</span>
+                </h1>
                 
-                <h1 style="color: #111111; font-size: 24px; margin: 0 0 20px 0; text-align: center;">You're on the list! 🎉</h1>
-                
-                <p style="font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
-                  Hello <strong>${name}</strong>,<br><br>
-                  Your application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you!
+                <p style="font-size: 14px; line-height: 1.6; color: #d1d5db; margin: 0 0 24px 0; text-align: left;">
+                  Hello <strong style="color: #ffffff;">${name}</strong>, your application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you!
                 </p>
 
-                <div style="background-color: #f8f9fa; border-left: 4px solid #00a4ef; padding: 15px; margin-bottom: 24px;">
-                  <p style="margin: 0; font-size: 14px;"><strong>Role:</strong> Innovator<br>
-                  <strong>Date &amp; Time:</strong> TBA</p>
+
+                <!-- Code Block -->
+                <div style="background-color: #0d1117; border: 1px solid #2ea043; border-radius: 8px; overflow: hidden; margin-bottom: 24px;">
+                  <!-- Mac-style header -->
+                  <div style="background-color: #161b22; padding: 8px 12px; border-bottom: 1px solid #30363d;">
+                    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #ff5f56; margin-right: 6px;"></span>
+                    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #ffbd2e; margin-right: 6px;"></span>
+                    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #27c93f; margin-right: 12px;"></span>
+                    <span style="color: #8b949e; font-size: 12px; font-family: monospace; vertical-align: middle;">system_log.json</span>
+                  </div>
+                  <div style="padding: 16px; font-family: 'Courier New', Courier, monospace; font-size: 13px; line-height: 1.5; text-align: left;">
+                    <span style="color: #ff7b72;">const</span> <span style="color: #79c0ff;">registration</span> <span style="color: #ff7b72;">=</span> {<br>
+                    &nbsp;&nbsp;<span style="color: #a5d6ff;">"status"</span>: <span style="color: #79c0ff;">200</span>,<br>
+                    &nbsp;&nbsp;<span style="color: #a5d6ff;">"user"</span>: <span style="color: #a5d6ff;">"${name}"</span>,<br>
+                    &nbsp;&nbsp;<span style="color: #a5d6ff;">"role"</span>: <span style="color: #a5d6ff;">"Innovator"</span>,<br>
+                    &nbsp;&nbsp;<span style="color: #a5d6ff;">"access_granted"</span>: <span style="color: #79c0ff;">true</span><br>
+                    };<br><br>
+                    <span style="color: #8b949e;">// Welcome to the club 🚀</span>
+                  </div>
                 </div>
 
-                <p style="font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
+                <!-- Details Grid -->
+                <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px; background-color: #080808; border-radius: 8px; border: 1px solid #1f1f1f;">
+                  <tr>
+                    <td style="padding: 15px; text-align: center; border-right: 1px solid #1f1f1f; width: 33%;">
+                      <div style="color: #8b949e; font-size: 11px; text-transform: uppercase; margin-bottom: 5px;">Date</div>
+                      <div style="color: #ffffff; font-size: 13px; font-weight: bold;">TBA</div>
+                    </td>
+                    <td style="padding: 15px; text-align: center; border-right: 1px solid #1f1f1f; width: 33%;">
+                      <div style="color: #8b949e; font-size: 11px; text-transform: uppercase; margin-bottom: 5px;">Time</div>
+                      <div style="color: #ffffff; font-size: 13px; font-weight: bold;">TBA</div>
+                    </td>
+                    <td style="padding: 15px; text-align: center; width: 33%;">
+                      <div style="color: #8b949e; font-size: 11px; text-transform: uppercase; margin-bottom: 5px;">Role</div>
+                      <div style="color: #58a6ff; font-size: 13px; font-weight: bold;">Innovator</div>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size: 13px; line-height: 1.5; color: #8b949e; margin: 0 0 20px 0; text-align: center;">
                   Join the official group for event details or any queries to ask from our team.
                 </p>
 
-                <div style="text-align: center; margin-bottom: 30px;">
-                  <a href="https://chat.whatsapp.com/" style="display: inline-block; background-color: #25D366; color: #ffffff; font-size: 16px; font-weight: bold; text-decoration: none; padding: 14px 28px; border-radius: 4px;">Join WhatsApp Group</a>
+                <!-- Button -->
+                <div style="text-align: center; margin-bottom: 15px;">
+                  <a href="https://chat.whatsapp.com/LpzfCa69X0T01YaWdjYrlT?s=sh&p=i&ilr=0&amv=2" style="display: inline-block; background-color: #25D366; color: #ffffff; font-size: 14px; font-weight: 600; text-decoration: none; padding: 12px 30px; border-radius: 20px;">Join WhatsApp Group</a>
                 </div>
 
-                <p style="font-size: 14px; color: #666666; margin: 0; text-align: center;">
-                  See you there!<br>
-                  Microsoft Tech Community Team
-                </p>
+                <!-- Link below button -->
+                <div style="text-align: center; margin-bottom: 30px;">
+                  <p style="font-size: 11px; color: #8b949e; margin: 0 0 5px 0;">Or copy and paste this link:</p>
+                  <a href="https://chat.whatsapp.com/LpzfCa69X0T01YaWdjYrlT?s=sh&p=i&ilr=0&amv=2" style="font-size: 11px; color: #58a6ff; text-decoration: none; word-break: break-all;">https://chat.whatsapp.com/LpzfCa69X0T01YaWdjYrlT?s=sh&amp;p=i&amp;ilr=0&amp;amv=2</a>
+                </div>
+
+                <!-- Divider -->
+                <hr style="border: none; border-top: 1px dashed #30363d; margin: 30px 0;">
+
+                <!-- VIP Pass Section -->
+                <div style="text-align: center;">
+                  <p style="color: #8b949e; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 15px 0;">VIP ENTRY PASS</p>
+                  
+                  <!-- Simulated Barcode using text -->
+                  <div style="font-family: 'Arial', sans-serif; font-size: 32px; font-weight: bold; letter-spacing: -2px; color: #ffffff; margin-bottom: 10px; transform: scaleY(1.5);">
+                    ||||| ||| || ||||
+                  </div>
+                  
+                  <p style="color: #8b949e; font-size: 10px; font-family: monospace; letter-spacing: 2px; margin: 0 0 20px 0;">MS-TECH-ID-6115</p>
+
+                  <a href="https://microsoft-tech-community.vercel.app" style="color: #ffffff; font-size: 11px; font-weight: bold; text-decoration: none; letter-spacing: 1px; text-transform: uppercase;">VISIT OFFICIAL WEBSITE</a>
+                </div>
               </div>
-              <div style="max-width: 600px; margin: 30px auto 0; text-align: center;">
-                <p style="color: #999999; font-size: 12px; line-height: 1.5; margin: 0;">
-                  This email was sent because you registered for the Microsoft Tech Community Bootcamp.<br>
+
+              <!-- Footer -->
+              <div style="max-width: 500px; margin: 30px auto 0; text-align: center;">
+                <p style="color: #6b7280; font-size: 11px; line-height: 1.5; margin: 0 0 10px 0;">
+                  Microsoft Tech Community is a student-led initiative. This email was sent because you registered for our Bootcamp.
+                </p>
+                <p style="color: #6b7280; font-size: 11px; margin: 0;">
                   &copy; ${new Date().getFullYear()} Microsoft Tech Community. All rights reserved.
                 </p>
               </div>
+
             </body>
             </html>
           `

@@ -25,8 +25,9 @@ const team = [
   {
     name: "Abhishek Agrawal",
     role: "President",
-    bio: "President of the Microsoft Tech Community at Amity Tech University.",
-    img: ""
+    bio: "Passionate about cloud computing, artificial intelligence, and building impactful technology solutions. As President of the Microsoft Technical Community and a Microsoft Student Ambassador, I lead initiatives that empower students to explore emerging technologies, develop practical skills, and grow through hands-on workshops, technical events, and collaborative projects.",
+    linkedin: "www.linkedin.com/in/abhishek-agrawal-dev",
+    img: getImage("Abhishek.jpeg")
   },
   {
     name: "Meher Bamrah",
@@ -91,8 +92,10 @@ const team = [
   {
     name: "Zia",
     role: "Web Dev Lead",
-    bio: "Web Dev Lead for the Microsoft Tech Community.",
-    img: ""
+    bio: "Hi, I'm Zia Kalra, a third-year BCA (Honours and Research) student with a keen interest in web development and a passion for creating clean, interactive, and impactful digital solutions. I enjoy exploring new technologies, working on collaborative projects, and continuously improving my skills in frontend development and problem-solving. I'm excited to be a part of this community, contribute to meaningful initiatives, and learn alongside an amazing team.",
+    linkdin: "https://www.linkedin.com/in/zia-kalra",
+    github : "https://github.com/Zia-Kalra",
+    img: getImage("Zia.jpeg")
   },
   {
     name: "Shaksham",
@@ -117,7 +120,7 @@ const team = [
     linkedin: "https://www.linkedin.com/in/ojaswi-singh-74701836a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     img: getImage("Ojaswi.jpg")
   },
-  { name: "Anam", role: "Core Member", bio: "Core Member at Microsoft Tech Community.", img: getImage("Anam.jpg") },
+  { name: "Anam", role: "Core Member", bio: "Hi, I'm Anam Singh, a final-year B.Tech student at Amity University and an active member of the Microsoft Technical Community for the past two years. Being a part of this community has played a significant role in my growth, helping me develop both technical and professional skills through various events, workshops, and collaborative initiatives. Alongside my ongoing internship and placement preparations, the exposure, mentorship, and learning opportunities provided by the community have strengthened my confidence and broadened my perspective. I am passionate about software development, continuous learning, and contributing to a culture of innovation and knowledge sharing.", img: getImage("Anam.jpeg"), linkedin:"https://www.linkedin.com/in/anam-singh-142182231?utm_source=share_via&utm_content=profile&utm_medium=member_android", github: "https://github.com/anamhere" },
   { name: "Aurindom", role: "Core Member", bio: "I enjoy programming and developing web applications and have a natural interest in problem solving, learning new technologies, and contributing to innovative projects as part of the club’s web development team.", linkedin: "https://www.linkedin.com/in/aurindom-ghosh-460747210/", github: "https://github.com/Aurindom971", img: getImage("Aurindom.jpg") },
   { name: "Ojaswi Sharma", role: "Core Member", bio: "Tech enthusiast with interests in web development, AI, and DevOps. Core member at MTC, contributing to tech events and building a collaborative developer community fueled by curiosity and caffeine.", linkedin: "https://www.linkedin.com/in/ojasvi-sharma-452880253", github: "https://github.com/sharmaojasvi21", img: getImage("Ojasvi2.jpg") },
   { name: "Radhika", role: "Core Member", bio: "I’m a curious and fast learner with a strong interest in AI and ML. As a core member of the social media team, I contribute innovative and creative ideas while continuously exploring new skills and opportunities to grow.", img: getImage("Radhika.jpg") },

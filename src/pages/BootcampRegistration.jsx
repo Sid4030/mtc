@@ -163,7 +163,7 @@ const BootcampRegistration = () => {
                 Please join our official WhatsApp group to receive all event updates, links, and announcements.
               </p>
               <div className="success-actions">
-                <a href="https://chat.whatsapp.com/your-group-link-here" target="_blank" rel="noreferrer" className="whatsapp-btn">
+                <a href="https://chat.whatsapp.com/LpzfCa69X0T01YaWdjYrlT?s=sh&p=i&ilr=0&amv=2" target="_blank" rel="noreferrer" className="whatsapp-btn">
                   Join WhatsApp Group
                 </a>
                 <button onClick={() => navigate("/")} className="return-home-btn">
