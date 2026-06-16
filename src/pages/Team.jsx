@@ -31,7 +31,7 @@ const team = [
   },
   {
     name: "Meher Bamrah",
-    role: "VP",
+    role: "Vice-President",
     bio: "“ਜਿਵੇਂ ਸੂਰਜਮੁਖੀ ਸੂਰਜ ਵੱਲ ਮੁੜਦਾ ਹੈ, ਤਿਵੇਂ ਮਨ ਵਾਹਿਗੁਰੂ ਵੱਲ ਮੁੜਨਾ ਚਾਹੀਦਾ ਹੈ।”\nJust like a sunflower turns toward the sun, the mind should turn toward the Divine. 🌻\n\nAlways curious about how things work and how they can be built better. Mostly found exploring AI/ML, research, design, and leadership, building impactful projects and working with teams to create meaningful innovation.",
     linkedin: "https://www.linkedin.com/in/meherbamrah/",
     github: "https://github.com/MeherBamrah",
@@ -39,7 +39,7 @@ const team = [
   },
   {
     name: "Sanya",
-    role: "Gen Sec",
+    role: "General Secretary ",
     bio: "General Secretary of the Microsoft Tech Community.",
     img: ""
   },
@@ -47,7 +47,7 @@ const team = [
     name: "Kamakshi Bagga",
     role: "Treasurer",
     bio: "“Like the sun that rises each day without fail, true growth comes from bringing light wherever you go.” ☀️\n\nDriven by curiosity, leadership, and a passion for continuous growth, I enjoy exploring new ideas, solving meaningful challenges, and turning vision into action. Passionate about AI/ML, Agentic AI, research, and emerging technologies, I am fascinated by the potential of intelligent systems to create real-world impact. With a strong belief in innovation, collaboration, and lifelong learning, I strive to transform ideas into meaningful solutions, inspire those around me, and contribute to initiatives that drive positive change. Always embracing new opportunities and working to leave every place brighter than I found it. ✨",
-    img: getImage("Kamakshi.jpg")
+    img: getImage("Kamakshi.jpeg")
   },
   {
     name: "Suhani Sharma",

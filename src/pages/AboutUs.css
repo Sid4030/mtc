@@ -18,9 +18,9 @@
 .glow-element {
     position: absolute;
     border-radius: 50%;
-    filter: blur(120px);
     z-index: 0;
     opacity: 0.15;
+    transform: translateZ(0);
 }
 
 .glow-1 {

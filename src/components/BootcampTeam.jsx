@@ -12,16 +12,16 @@ const getImage = (filename) => {
 
 const bootcampTeam = [
   { name: "Anushka Marwaha", img: getImage("Anushka.jpg") },
-  { name: "Aurindam", img: getImage("Aurindom.jpg") },
-  { name: "Kamakshi", img: getImage("Kamakshi.jpg") },
-  { name: "Ojaswi", img: getImage("Ojaswi.jpg") },
-  { name: "Saksham", img: getImage("Saksham.jpg") },
-  { name: "Shahee", img: getImage("Shahee.jpg") },
-  { name: "Siddhant", img: getImage("Siddhant.jpg") },
-  { name: "Shourya", img: getImage("Shaurya.jpg") },
-  { name: "Sonakshi", img: getImage("Sonakshi.jpg") },
-  { name: "Radhika", img: getImage("Radhika.jpg") },
-  { name: "Shanvi", img: getImage("Shanvi.jpg") }
+  { name: "Aurindom Ghosh", img: getImage("Aurindom.jpg") },
+  { name: "Kamakshi Bagga", img: getImage("Kamakshi.jpeg") },
+  { name: "Ojaswi Singh", img: getImage("Ojaswi.jpg") },
+  { name: "Saksham Sharma", img: getImage("Saksham.jpg") },
+  { name: "Shahee Bhambani", img: getImage("Shahee.jpg") },
+  { name: "Siddhant Choudhary", img: getImage("Siddhant.jpg") },
+  { name: "Shourya Mishra", img: getImage("Shaurya.jpg") },
+  { name: "Sonakshi Kumar", img: getImage("Sonakshi.jpg") },
+  { name: "Radhika Srivastava", img: getImage("Radhika.jpg") },
+  { name: "Shanvi Singh", img: getImage("Shanvi.jpg") }
 ];
 
 const FallbackAvatar = ({ name }) => {

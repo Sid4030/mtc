@@ -165,8 +165,8 @@ const BootcampPromo = ({ introFinished }) => {
           </svg>
 
           <div className="bootcamp-promo-badge">NEW</div>
-          <h3 className="bootcamp-promo-title">Bootcamp Event</h3>
-          <p className="bootcamp-promo-desc">Join our latest bootcamp and level up your skills!</p>
+          <h3 className="bootcamp-promo-title">Season of AI 2.0</h3>
+          <p className="bootcamp-promo-desc">Join our latest bootcamp and level up your AI portfolio</p>
           
           <div className="bootcamp-branch-container">
             {branchStep >= 2 && (
@@ -226,10 +226,10 @@ const BootcampPromo = ({ introFinished }) => {
 
       {/* Peeking Tabs on Scroll */}
       <div className="bootcamp-peek-tab left-peek" ref={leftPeekRef} onClick={scrollToTop}>
-        <div className="peek-content">A Bootcamp event going on</div>
+        <div className="peek-content">Season of AI 2.0 is Live</div>
       </div>
       <div className="bootcamp-peek-tab right-peek" ref={rightPeekRef} onClick={scrollToTop}>
-        <div className="peek-content">A Bootcamp event going on</div>
+        <div className="peek-content">Season of AI 2.0 is Live</div>
       </div>
     </>
   );

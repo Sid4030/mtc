@@ -268,8 +268,9 @@ const Navbar = () => {
           <div className="nav-menu-right-col">
             <div className="nav-menu-socials-clean">
               <p className="nav-socials-label">Get in touch</p>
-              <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className="nav-social-link">LinkedIn</a>
+              <a href="https://www.linkedin.com/company/msfttechcommunity" target="_blank" rel="noreferrer" className="nav-social-link">LinkedIn</a>
               <a href="https://www.instagram.com" target="_blank" rel="noreferrer" className="nav-social-link">Instagram</a>
+              <a href="https://chat.whatsapp.com/LibHu9zhM7EBxWpYYK2tZY" target="_blank" rel="noreferrer" className="nav-social-link">WhatsApp</a>
               <a href="mailto:mlsa@amity.edu" className="nav-social-link">mlsa@amity.edu</a>
             </div>
 
