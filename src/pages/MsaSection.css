@@ -21,8 +21,8 @@
 
 .msa-interactive-logo-container {
     perspective: 1000px;
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     cursor: pointer;
     z-index: 20;
     position: relative;
@@ -445,32 +445,32 @@
     }
     .shape-card {
         width: 100%;
-        max-width: 280px;
-        height: 280px;
+        max-width: 240px;
+        height: 240px;
         margin: 0 auto !important;
         padding: 20px;
         transition: transform 0.4s ease;
     }
     .shape-rect {
-        transform: translateX(-15px);
+        transform: translateX(-10px);
         z-index: 1;
     }
     .shape-circle {
         border-radius: 50%;
-        margin-top: -60px !important;
-        transform: translateX(15px);
+        margin-top: -40px !important;
+        transform: translateX(10px);
         z-index: 2;
     }
     .shape-u {
-        border-radius: 0 0 140px 140px;
-        margin-top: -60px !important;
-        transform: translateX(-15px);
+        border-radius: 0 0 120px 120px;
+        margin-top: -40px !important;
+        transform: translateX(-10px);
         z-index: 3;
     }
     .shape-leaf {
-        border-radius: 0 140px 0 0;
-        margin-top: -60px !important;
-        transform: translateX(15px);
+        border-radius: 0 120px 0 0;
+        margin-top: -40px !important;
+        transform: translateX(10px);
         z-index: 4;
     }
     

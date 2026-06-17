@@ -1,14 +1,12 @@
 .bootcamp-reg-page.bw-theme {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-color: #050505; /* Deep black background */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   padding: clamp(1rem, 4vw, 2rem);
   padding-top: 100px;
   font-family: 'DM Sans', sans-serif;
