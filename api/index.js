@@ -114,6 +114,19 @@ app.post('/api/register', async (req, res) => {
       return res.status(400).json({ error: "College Name is required." });
     }
 
+    // Check for duplicates
+    const existingRegistration = await Registration.findOne({
+      $or: [{ email }, { contactNumber }]
+    });
+
+    if (existingRegistration) {
+      if (existingRegistration.email === email) {
+        return res.status(409).json({ error: "This email address is already registered." });
+      } else {
+        return res.status(409).json({ error: "This contact number is already registered." });
+      }
+    }
+
     const newRegistration = new Registration({ 
       name, email, contactNumber, collegeType, enrollmentNo, collegeName, 
       courseName, specialisation, year, linkedinUrl, githubUrl, motivation 

@@ -21,6 +21,7 @@ const BootcampRegistration = () => {
   });
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -73,6 +74,7 @@ const BootcampRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setFormError('');
 
     try {
       const API_URL = import.meta.env.VITE_API_URL || '';
@@ -93,10 +95,10 @@ const BootcampRegistration = () => {
           gsap.to(hoverAdRef.current, { opacity: 0, duration: 0.4 });
         }
       } else {
-        alert(`Error: ${data.error}`);
+        setFormError(data.error || "An error occurred during registration.");
       }
     } catch (err) {
-      alert("Failed to register. Please check if the backend is running.");
+      setFormError("Failed to register. Please check if the backend is running.");
     } finally {
       setLoading(false);
     }
@@ -209,17 +211,17 @@ const BootcampRegistration = () => {
             <form className="bootcamp-reg-form" ref={formRef} onSubmit={handleSubmit}>
               <div className="bootcamp-reg-input-group">
                 <label>Full Name <span className="text-red-500">*</span></label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" required />
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="meow Choudhary" required />
               </div>
 
               <div className="bootcamp-reg-input-group">
                 <label>Email Address <span className="text-red-500">*</span></label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required />
+                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="[EMAIL_ADDRESS]" required />
               </div>
 
               <div className="bootcamp-reg-input-group">
                 <label>Contact Number (WhatsApp) <span className="text-red-500">*</span></label>
-                <input type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="+91 9876543210" required />
+                <input type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="9876543210" required />
               </div>
 
               <div className="bootcamp-reg-input-group">
@@ -280,6 +282,12 @@ const BootcampRegistration = () => {
                 <label>Motivation to Join <span className="text-gray-500 text-sm font-normal ml-2">(Optional)</span></label>
                 <textarea name="motivation" value={formData.motivation} onChange={handleChange} placeholder="Why do you want to join this bootcamp?" rows="3" style={{width: '100%', padding: '12px', background: '#F4F4F0', border: '3px solid #1D1C1C', borderRadius: '8px', color: '#1D1C1C', fontFamily: "'DM Sans', sans-serif", fontSize: '0.9rem', outline: 'none', resize: 'vertical'}}></textarea>
               </div>
+
+              {formError && (
+                <div style={{ color: '#ff4d4d', marginBottom: '15px', textAlign: 'center', fontSize: '0.95rem', fontWeight: 'bold' }}>
+                  {formError}
+                </div>
+              )}
 
               <button type="submit" className="bootcamp-reg-submit bw-btn" disabled={loading}>
                 {loading ? "Processing..." : "Submit Application"}
