@@ -40,9 +40,7 @@ async function connectToDatabase() {
     return null;
   }
   if (!cachedConnection.promise) {
-    cachedConnection.promise = mongoose.connect(MONGO_URI, {
-      serverSelectionTimeoutMS: 5000 // fail early if it cannot connect
-    }).then((mongoose) => mongoose);
+    cachedConnection.promise = mongoose.connect(MONGO_URI).then((mongoose) => mongoose);
   }
   cachedConnection.conn = await cachedConnection.promise;
   console.log('✅ Connected to MongoDB Atlas');
