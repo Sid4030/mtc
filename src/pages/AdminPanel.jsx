@@ -25,6 +25,13 @@ const LinkIcon = () => (
   </svg>
 );
 
+const UserIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+    <circle cx="12" cy="7" r="4"></circle>
+  </svg>
+);
+
 const AdminPanel = () => {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState(sessionStorage.getItem('adminToken') || '');
@@ -82,7 +89,7 @@ const AdminPanel = () => {
 
   // Entrance Animation
   useEffect(() => {
-    if (token) {
+    if (token && registrations.length > 0) {
       gsap.fromTo(".admin-fade-in", 
         { opacity: 0, y: 20 }, 
         { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.05 }
@@ -178,31 +185,35 @@ const AdminPanel = () => {
 
   if (!token) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 font-['DM_Sans',sans-serif] text-slate-900">
-        <div className="max-w-sm w-full bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-          <div className="text-center mb-8">
-            <div className="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-bold text-xl mx-auto mb-4">
-              A
+      <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4 font-['DM_Sans',sans-serif] text-white relative overflow-hidden">
+        {/* Abstract Background Elements */}
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div className="max-w-md w-full bg-white/5 backdrop-blur-xl p-10 rounded-3xl border border-white/10 shadow-2xl relative z-10">
+          <div className="text-center mb-10">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-2xl flex items-center justify-center font-bold text-2xl mx-auto mb-6 shadow-lg shadow-blue-500/30">
+              <UserIcon />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Admin Login</h1>
-            <p className="text-slate-500 mt-2 text-sm font-medium">Enter credentials to proceed</p>
+            <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">Admin Portal</h1>
+            <p className="text-white/50 text-sm font-medium">Secure access to MTC Dashboard</p>
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-3 rounded-lg mb-6 text-center">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl mb-8 text-center backdrop-blur-md">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Master Password</label>
+              <label className="block text-white/60 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Master Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-                placeholder="••••••••"
+                className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-white/20"
+                placeholder="Enter password"
                 autoComplete="new-password"
                 required
               />
@@ -211,9 +222,9 @@ const AdminPanel = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-slate-900 text-white font-semibold py-3 px-4 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-50"
+              className="w-full bg-white text-black font-bold py-4 px-4 rounded-xl hover:bg-gray-200 transition-all disabled:opacity-50 mt-4 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
             >
-              {loading ? 'Authenticating...' : 'Sign In'}
+              {loading ? 'Authenticating...' : 'Sign In to Dashboard'}
             </button>
           </form>
         </div>
@@ -222,130 +233,171 @@ const AdminPanel = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 font-['DM_Sans',sans-serif] text-slate-900 pb-24">
-      {/* Sticky Minimal Navbar */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-slate-900 text-white rounded-lg flex items-center justify-center font-bold text-sm">
+    <div className="min-h-screen bg-[#050505] font-['DM_Sans',sans-serif] text-white pb-24 relative selection:bg-blue-500/30">
+      {/* Abstract Background Effects */}
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-20%] left-1/4 w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-[-10%] right-1/4 w-[40%] h-[40%] bg-purple-600/10 rounded-full blur-[150px]"></div>
+      </div>
+
+      {/* Glassmorphic Navbar */}
+      <div className="sticky top-0 z-50 bg-[#050505]/60 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-lg shadow-blue-500/20">
                 A
               </div>
-              <span className="font-bold text-lg tracking-tight">Admin Dashboard</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-2 mr-2">
-                <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                <span className="text-sm text-slate-500 font-medium">{registrations.length} Verified Signups</span>
+              <div>
+                <h1 className="font-bold text-xl tracking-tight leading-none text-white">MTC Admin</h1>
+                <span className="text-xs text-blue-400 font-medium tracking-wider uppercase mt-1 block">Live Dashboard</span>
               </div>
+            </div>
+            
+            <div className="flex items-center gap-3 sm:gap-6">
+              <div className="hidden md:flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                <div className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                </div>
+                <span className="text-sm text-white/80 font-medium">{registrations.length} Verified Signups</span>
+              </div>
+              
               <button 
                 onClick={exportToCSV} 
-                className="flex items-center gap-2 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors"
+                className="flex items-center gap-2 text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2.5 rounded-xl transition-all hover:scale-105 active:scale-95"
               >
-                <ExportIcon /> <span className="hidden sm:inline">Export</span>
+                <ExportIcon /> <span className="hidden sm:inline">Export CSV</span>
               </button>
-              <div className="w-px h-6 bg-slate-200 mx-1"></div>
+              
+              <div className="w-px h-8 bg-white/10 mx-1 hidden sm:block"></div>
+              
               <button 
                 onClick={handleLogout} 
-                className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-red-600 transition-colors"
-                title="Logout"
+                className="flex items-center justify-center w-10 h-10 sm:w-auto sm:px-4 sm:h-auto sm:py-2.5 gap-2 text-sm font-medium text-white/60 hover:text-red-400 hover:bg-red-400/10 rounded-xl transition-all"
+                title="Secure Logout"
               >
                 <LogoutIcon />
+                <span className="hidden sm:inline font-semibold">Logout</span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+      {/* Main Content Dashboard */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-10">
         {error && (
-          <div className="bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-3 rounded-lg mb-8">
-            {error}
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl mb-8 backdrop-blur-md flex items-center justify-between">
+            <span>{error}</span>
+            <button onClick={() => setError('')} className="opacity-50 hover:opacity-100">×</button>
           </div>
         )}
 
-        <div className="mb-6 flex justify-between items-end">
-          <h2 className="text-xl font-bold text-slate-800">Recent Registrations</h2>
+        <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+          <div>
+            <h2 className="text-3xl font-extrabold text-white tracking-tight">Registration Data</h2>
+            <p className="text-white/50 text-sm mt-2">Manage and review bootcamp applicants.</p>
+          </div>
           {/* Mobile counter */}
-          <span className="md:hidden text-sm text-slate-500 font-medium bg-white border border-slate-200 px-3 py-1 rounded-full shadow-sm">
-            Total: {registrations.length}
-          </span>
+          <div className="sm:hidden flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10 w-full justify-center">
+            <span className="w-2 h-2 rounded-full bg-green-500"></span>
+            <span className="text-sm text-white/80 font-medium">Total: {registrations.length}</span>
+          </div>
         </div>
 
-        {/* List of Data Cards instead of dense table */}
-        <div className="space-y-4">
+        {/* Dynamic Glassmorphic Data Cards */}
+        <div className="grid grid-cols-1 gap-5">
           {loading && registrations.length === 0 ? (
-            <div className="text-center py-20 text-slate-400 font-medium">Fetching secure data...</div>
+            <div className="text-center py-32 border border-white/5 rounded-3xl bg-white/[0.02] backdrop-blur-sm">
+              <div className="w-10 h-10 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-white/50 font-medium animate-pulse">Decrypting secure records...</p>
+            </div>
           ) : registrations.length === 0 ? (
-            <div className="text-center py-20 bg-white border border-slate-200 rounded-xl shadow-sm text-slate-500">
-              No registrations found.
+            <div className="text-center py-32 border border-white/5 rounded-3xl bg-white/[0.02] backdrop-blur-sm">
+              <div className="text-5xl mb-4 opacity-20">📭</div>
+              <h3 className="text-xl font-bold text-white mb-2">No Registrations Yet</h3>
+              <p className="text-white/40">Data will appear here once users start signing up.</p>
             </div>
           ) : (
             registrations.map((reg) => (
-              <div key={reg._id} className="admin-fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-5 md:p-6 flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow">
+              <div key={reg._id} className="admin-fade-in group relative bg-white/[0.03] rounded-2xl border border-white/[0.05] p-6 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 overflow-hidden">
                 
-                {/* Left: Identity */}
-                <div className="flex items-start gap-4 md:w-1/3">
-                  <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
-                    {reg.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-bold text-slate-900 text-base truncate">{reg.name}</h3>
-                    <p className="text-slate-500 text-sm mt-0.5 truncate">{reg.email}</p>
-                    <p className="text-slate-400 text-xs mt-1 font-mono tracking-tight">{reg.contactNumber}</p>
-                  </div>
-                </div>
+                {/* Hover Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
-                {/* Middle: Education */}
-                <div className="md:w-1/3 flex flex-col justify-center">
-                  <p className="text-sm font-semibold text-slate-800">
-                    {reg.collegeType === 'Amity' ? 'Amity University' : reg.collegeName}
-                  </p>
-                  <p className="text-sm text-slate-500 mt-1 font-medium">
-                    {reg.courseName} <span className="text-slate-300 mx-1">•</span> {reg.specialisation}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-600">
-                      Year {reg.year}
-                    </span>
-                    {reg.enrollmentNo && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200/50">
-                        ID: {reg.enrollmentNo}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Right: Motivation & Links */}
-                <div className="md:w-1/3 flex flex-col">
-                  {reg.motivation ? (
-                    <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-sm text-slate-600 italic line-clamp-2 mb-3">
-                      "{reg.motivation}"
-                    </div>
-                  ) : (
-                    <div className="text-sm text-slate-400 italic mb-3">No motivation provided.</div>
-                  )}
+                <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8">
                   
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className="flex gap-4">
+                  {/* Column 1: Identity */}
+                  <div className="flex items-start gap-5 md:w-[35%]">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 text-white flex items-center justify-center font-bold text-xl flex-shrink-0 shadow-inner">
+                      {reg.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="min-w-0 pt-1">
+                      <h3 className="font-bold text-white text-lg truncate flex items-center gap-2">
+                        {reg.name}
+                      </h3>
+                      <a href={`mailto:${reg.email}`} className="text-blue-400 text-sm mt-1 truncate block hover:underline">{reg.email}</a>
+                      <p className="text-white/40 text-xs mt-1.5 font-mono tracking-wider">{reg.contactNumber}</p>
+                    </div>
+                  </div>
+
+                  {/* Column 2: Education & Tags */}
+                  <div className="md:w-[35%] flex flex-col justify-center border-t border-white/5 md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-8">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`w-1.5 h-1.5 rounded-full ${reg.collegeType === 'Amity' ? 'bg-orange-500' : 'bg-purple-500'}`}></span>
+                      <p className="text-sm font-bold text-white/90">
+                        {reg.collegeType === 'Amity' ? 'Amity University' : reg.collegeName}
+                      </p>
+                    </div>
+                    
+                    <p className="text-sm text-white/60 font-medium">
+                      {reg.courseName} <span className="text-white/20 mx-1.5">|</span> {reg.specialisation}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-white/5 text-white/80 border border-white/5">
+                        Year {reg.year}
+                      </span>
+                      {reg.enrollmentNo && (
+                        <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-blue-500/10 text-blue-300 border border-blue-500/20">
+                          {reg.enrollmentNo}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Column 3: Links & Motivation */}
+                  <div className="md:w-[30%] flex flex-col border-t border-white/5 md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-8">
+                    <div className="flex gap-4 mb-4">
                       {reg.linkedinUrl && (
-                        <a href={reg.linkedinUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                        <a href={reg.linkedinUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-bold text-white/70 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10">
                           <LinkIcon /> LinkedIn
                         </a>
                       )}
                       {reg.githubUrl && (
-                        <a href={reg.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
+                        <a href={reg.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-bold text-white/70 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10">
                           <LinkIcon /> GitHub
                         </a>
                       )}
                     </div>
-                    <div className="text-xs text-slate-400 font-medium">
-                      {new Date(reg.registrationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+
+                    {reg.motivation ? (
+                      <div className="flex-1 text-sm text-white/50 italic line-clamp-2 leading-relaxed">
+                        "{reg.motivation}"
+                      </div>
+                    ) : (
+                      <div className="flex-1 text-sm text-white/30 italic">No motivation provided.</div>
+                    )}
+                    
+                    <div className="mt-4 flex items-center justify-end">
+                      <div className="text-xs text-white/30 font-bold tracking-widest uppercase">
+                        {new Date(reg.registrationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </div>
                     </div>
                   </div>
+                  
                 </div>
-                
               </div>
             ))
           )}
