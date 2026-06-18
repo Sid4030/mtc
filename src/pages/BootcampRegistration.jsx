@@ -112,20 +112,20 @@ const BootcampRegistration = () => {
   return (
     <div className="bootcamp-reg-page bw-theme" ref={containerRef}>
       <Helmet>
-        <title>Register for Azure AI Bootcamp | Microsoft Tech Community & Kapidhwaj</title>
-        <meta name="description" content="Secure your spot in the ultimate 8-session Azure AI Bootcamp. Build real AI projects, learn Copilot Studio, and win internships. Register now for free!" />
-        <meta name="keywords" content="Azure AI, Bootcamp Registration, Microsoft Tech Community, Kapidhwaj Innovations, AI Event Sign Up, MLSA" />
+        <title>Bootcamp Registration | Microsoft Tech Community</title>
+        <meta name="description" content="Register now for the ultimate Azure AI Bootcamp by Microsoft Tech Community. Learn Copilot Studio, build real-world AI projects, and win internships. Secure your spot!" />
+        <meta name="keywords" content="Bootcamp Registration, Azure AI, Microsoft Tech Community, AI Bootcamp, Student Developer, MLSA, Registration, Copilot Studio" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Register for Azure AI Bootcamp" />
-        <meta property="og:description" content="Join the Microsoft Tech Community for an exclusive Azure AI Bootcamp. Register now to secure your spot!" />
+        <meta property="og:title" content="Bootcamp Registration | Microsoft Tech Community" />
+        <meta property="og:description" content="Register now for the ultimate Azure AI Bootcamp by Microsoft Tech Community. Build real AI projects and accelerate your tech career." />
         <meta property="og:image" content="https://techcommunity.microsoft.com/msteams_16.png" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Register for Azure AI Bootcamp" />
-        <meta name="twitter:description" content="Join the Microsoft Tech Community for an exclusive Azure AI Bootcamp. Register now to secure your spot!" />
+        <meta name="twitter:title" content="Bootcamp Registration | Microsoft Tech Community" />
+        <meta name="twitter:description" content="Register now for the ultimate Azure AI Bootcamp by Microsoft Tech Community. Build real AI projects and accelerate your tech career." />
         <meta name="twitter:image" content="https://techcommunity.microsoft.com/msteams_16.png" />
       </Helmet>
       
@@ -241,7 +241,7 @@ const BootcampRegistration = () => {
               {formData.collegeType === 'Other' && (
                 <div className="bootcamp-reg-input-group">
                   <label>College Name <span className="text-red-500">*</span></label>
-                  <input type="text" name="collegeName" value={formData.collegeName} onChange={handleChange} placeholder="Tech University" required />
+                  <input type="text" name="collegeName" value={formData.collegeName} onChange={handleChange} placeholder="Amity University" required />
                 </div>
               )}
 

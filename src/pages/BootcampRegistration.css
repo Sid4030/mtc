@@ -172,6 +172,12 @@
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Force dropdown options to be dark on all operating systems */
+.bootcamp-reg-input-group select option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
 .bootcamp-reg-input-group input::placeholder,
 .bootcamp-reg-input-group textarea::placeholder {
   color: rgba(255, 255, 255, 0.35);
