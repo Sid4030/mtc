@@ -211,7 +211,7 @@ const BootcampRegistration = () => {
             <form className="bootcamp-reg-form" ref={formRef} onSubmit={handleSubmit}>
               <div className="bootcamp-reg-input-group">
                 <label>Full Name <span className="text-red-500">*</span></label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="meow Choudhary" required />
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Bill Gates" required />
               </div>
 
               <div className="bootcamp-reg-input-group">
@@ -221,7 +221,7 @@ const BootcampRegistration = () => {
 
               <div className="bootcamp-reg-input-group">
                 <label>Contact Number (WhatsApp) <span className="text-red-500">*</span></label>
-                <input type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="9876543210" required />
+                <input type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="9876543210" maxLength="10" minLength="10" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required />
               </div>
 
               <div className="bootcamp-reg-input-group">
