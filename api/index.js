@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
+import path from 'path';
 
 dotenv.config();
 
@@ -49,6 +50,29 @@ async function connectToDatabase() {
 
 // Connect initially
 connectToDatabase().catch((err) => console.error('❌ MongoDB connection error:', err));
+
+// Email Transporter setup (reused across requests for better performance under high traffic)
+let globalTransporter = null;
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  globalTransporter = nodemailer.createTransport({
+    pool: true, // Pool connections to handle high concurrent traffic
+    maxConnections: 5,
+    maxMessages: 100,
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+  
+  globalTransporter.verify((error, success) => {
+    if (error) {
+      console.error('⚠️ Email Transporter Error:', error);
+    } else {
+      console.log('✅ Email Transporter is ready');
+    }
+  });
+}
 
 // Mongoose Schema & Model for full bootcamp registration
 const registrationSchema = new mongoose.Schema({
@@ -133,22 +157,15 @@ app.post('/api/register', async (req, res) => {
     await newRegistration.save();
 
     // Send confirmation email
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    if (globalTransporter) {
       try {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-          }
-        });
 
         const mailOptions = {
-          from: `"Microsoft Tech Community" <${process.env.EMAIL_USER}>`,
+          from: `"Siddhant From Microsoft Tech Community" <${process.env.EMAIL_USER}>`,
           replyTo: process.env.EMAIL_USER,
           to: email,
-          subject: `Bootcamp Registration Confirmed: ${name} [${new Date().toLocaleTimeString()}]`,
-          text: `Hello ${name},\n\nYour application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you!\n\nJoin the official WhatsApp group for event details or any queries: https://chat.whatsapp.com/LpzfCa69X0T01YaWdjYrlT?s=sh&p=i&ilr=0&amv=2\n\nSee you there!`,
+          subject: `Bootcamp Registration Confirmed: ${name} `,
+          text: `Hello ${name},\n\nYour application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you! Check out the brochure to explore your journey.\n\nJoin the official WhatsApp group for event details or any queries: https://chat.whatsapp.com/LpzfCa69X0T01YaWdjYrlT?s=sh&p=i&ilr=0&amv=2\n\nSee you there!`,
           html: `
             <!DOCTYPE html>
             <html>
@@ -177,7 +194,7 @@ app.post('/api/register', async (req, res) => {
                 </h1>
                 
                 <p style="font-size: 14px; line-height: 1.6; color: #d1d5db; margin: 0 0 24px 0; text-align: left;">
-                  Hello <strong style="color: #ffffff;">${name}</strong>, your application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you!
+                  Hello <strong style="color: #ffffff;">${name}</strong>, your application for the Microsoft Tech Community Bootcamp has been successfully received. We're thrilled to have you! Check out the brochure to explore your journey.
                 </p>
 
 
@@ -264,13 +281,21 @@ app.post('/api/register', async (req, res) => {
 
             </body>
             </html>
-          `
+          `,
+          attachments: [
+            {
+              filename: 'Season of AI Brochure.pdf',
+              path: path.join(process.cwd(), 'Season of AI Brochure.pdf')
+            }
+          ]
         };
 
-        await transporter.sendMail(mailOptions);
-        console.log('Confirmation email sent to', email);
-      } catch (mailError) {
-        console.error('Error sending confirmation email:', mailError);
+        // Send email asynchronously so it doesn't block the API response
+        globalTransporter.sendMail(mailOptions)
+          .then(() => console.log('Confirmation email sent to', email))
+          .catch((mailError) => console.error('Error sending confirmation email:', mailError));
+      } catch (mailSetupError) {
+        console.error('Error setting up confirmation email:', mailSetupError);
       }
     }
 

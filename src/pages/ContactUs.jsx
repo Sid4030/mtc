@@ -128,7 +128,7 @@ const ContactUs = () => {
 
             {/* Instagram Card */}
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/microsoftlearnstudentcommunity?igsh=NHFxMDU1bnJndXZw&utm_source=qr" 
               target="_blank" 
               rel="noreferrer" 
               className="social-bento-card bento-insta"
@@ -186,7 +186,7 @@ const ContactUs = () => {
               <div className="tiwis-contact">
                 <a href="https://chat.whatsapp.com/LibHu9zhM7EBxWpYYK2tZY">WHATSAPP</a>
                 <a href="https://www.linkedin.com/company/msfttechcommunity">LINKEDIN</a>
-                <a href="#">INSTAGRAM</a>
+                <a href="https://www.instagram.com/microsoftlearnstudentcommunity?igsh=NHFxMDU1bnJndXZw&utm_source=qr">INSTAGRAM</a>
               </div>
               <div className="tiwis-credits">
                 <span>© 2026 MICROSOFT TECHNICAL COMMUNITY</span>

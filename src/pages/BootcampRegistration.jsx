@@ -176,7 +176,7 @@ const BootcampRegistration = () => {
               </div>
               <h2 className="success-title">Thank You!</h2>
               <p className="success-message">
-                Your application has been successfully submitted! A copy of your details has been sent to your email.
+                Your application has been successfully submitted! The Bouchure and additional details have been sent to your registered email.
                 <br/><br/>
                 <strong>Note:</strong> If you don't see the email in your inbox, please make sure to check your <strong>Spam or Junk</strong> folder.
               </p>

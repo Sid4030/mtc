@@ -269,7 +269,7 @@ const Navbar = () => {
             <div className="nav-menu-socials-clean">
               <p className="nav-socials-label">Get in touch</p>
               <a href="https://www.linkedin.com/company/msfttechcommunity" target="_blank" rel="noreferrer" className="nav-social-link">LinkedIn</a>
-              <a href="https://www.instagram.com" target="_blank" rel="noreferrer" className="nav-social-link">Instagram</a>
+              <a href="https://www.instagram.com/microsoftlearnstudentcommunity?igsh=NHFxMDU1bnJndXZw&utm_source=qr" target="_blank" rel="noreferrer" className="nav-social-link">Instagram</a>
               <a href="https://chat.whatsapp.com/LibHu9zhM7EBxWpYYK2tZY" target="_blank" rel="noreferrer" className="nav-social-link">WhatsApp</a>
              
             </div>
