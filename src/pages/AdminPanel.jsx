@@ -38,6 +38,7 @@ const AdminPanel = () => {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [filterType, setFilterType] = useState('All');
 
   // Add noindex meta tag
   useEffect(() => {
@@ -151,13 +152,20 @@ const AdminPanel = () => {
     sessionStorage.removeItem('adminToken');
   };
 
+  const filteredRegistrations = registrations.filter(reg => {
+    if (filterType === 'All') return true;
+    if (filterType === 'Amity') return reg.collegeType === 'Amity';
+    if (filterType === 'Other') return reg.collegeType !== 'Amity';
+    return true;
+  });
+
   const exportToCSV = () => {
-    if (registrations.length === 0) return;
+    if (filteredRegistrations.length === 0) return;
     const headers = [
       'Name', 'Email', 'Contact Number', 'College Type', 'Enrollment No / College Name',
       'Course', 'Specialisation', 'Year', 'LinkedIn', 'GitHub', 'Motivation', 'Registration Date'
     ];
-    const rows = registrations.map(reg => [
+    const rows = filteredRegistrations.map(reg => [
       `"${reg.name || ''}"`,
       `"${reg.email || ''}"`,
       `"${reg.contactNumber || ''}"`,
@@ -260,9 +268,19 @@ const AdminPanel = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
                 </div>
-                <span className="text-sm text-white/80 font-medium">{registrations.length} Verified Signups</span>
+                <span className="text-sm text-white/80 font-medium">{filteredRegistrations.length} Verified Signups</span>
               </div>
               
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="bg-[#050505] border border-white/20 text-white text-sm rounded-xl px-4 py-2 focus:outline-none focus:border-blue-500 transition-all cursor-pointer font-medium"
+              >
+                <option value="All">All Colleges</option>
+                <option value="Amity">Amity University</option>
+                <option value="Other">Other Colleges</option>
+              </select>
+
               <button 
                 onClick={exportToCSV} 
                 className="flex items-center gap-2 text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2.5 rounded-xl transition-all hover:scale-105 active:scale-95"
@@ -302,7 +320,7 @@ const AdminPanel = () => {
           {/* Mobile counter */}
           <div className="sm:hidden flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10 w-full justify-center">
             <span className="w-2 h-2 rounded-full bg-green-500"></span>
-            <span className="text-sm text-white/80 font-medium">Total: {registrations.length}</span>
+            <span className="text-sm text-white/80 font-medium">Total: {filteredRegistrations.length}</span>
           </div>
         </div>
 
@@ -313,14 +331,14 @@ const AdminPanel = () => {
               <div className="w-10 h-10 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-white/50 font-medium animate-pulse">Decrypting secure records...</p>
             </div>
-          ) : registrations.length === 0 ? (
+          ) : filteredRegistrations.length === 0 ? (
             <div className="text-center py-32 border border-white/5 rounded-3xl bg-white/[0.02] backdrop-blur-sm">
               <div className="text-5xl mb-4 opacity-20">📭</div>
-              <h3 className="text-xl font-bold text-white mb-2">No Registrations Yet</h3>
-              <p className="text-white/40">Data will appear here once users start signing up.</p>
+              <h3 className="text-xl font-bold text-white mb-2">No Registrations Found</h3>
+              <p className="text-white/40">No records match your current filter or data is empty.</p>
             </div>
           ) : (
-            registrations.map((reg) => (
+            filteredRegistrations.map((reg) => (
               <div key={reg._id} className="admin-fade-in group relative bg-white/[0.03] rounded-2xl border border-white/[0.05] p-6 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 overflow-hidden">
                 
                 {/* Hover Glow Effect */}
@@ -383,11 +401,11 @@ const AdminPanel = () => {
                     </div>
 
                     {reg.motivation ? (
-                      <div className="flex-1 text-sm text-white/50 italic line-clamp-2 leading-relaxed">
+                      <div className="flex-1 text-sm text-white/80 italic leading-relaxed whitespace-pre-wrap mt-2 p-4 bg-white/5 rounded-xl border border-white/10 shadow-inner">
                         "{reg.motivation}"
                       </div>
                     ) : (
-                      <div className="flex-1 text-sm text-white/30 italic">No motivation provided.</div>
+                      <div className="flex-1 text-sm text-white/30 italic mt-2">No motivation provided.</div>
                     )}
                     
                     <div className="mt-4 flex items-center justify-end">
