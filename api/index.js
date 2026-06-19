@@ -15,6 +15,9 @@ const PORT = process.env.PORT || 5001;
 // Security Middleware
 app.use(helmet()); // Sets secure HTTP headers
 
+// Trust proxy for Vercel (required for rate limiting to work correctly)
+app.set('trust proxy', 1);
+
 // Rate Limiting (Prevent abuse / DDoS)
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
