@@ -19,12 +19,8 @@ const Globe = () => {
         [1, 0.45, 0.45, 0.8, 1]
     );
 
-    const blurAmount = useTransform(
-        scrollYProgress,
-        [0, 0.2, 0.8, 1],
-        [0, 3, 3, 0]
-    );
-    const filter = useTransform(blurAmount, (v) => `blur(${v}px)`);
+    // Removed dynamic scroll blur because blurring a WebGL canvas causes severe lag in Chromium browsers
+
 
     const y = useTransform(
         scrollYProgress,
@@ -475,7 +471,7 @@ const Globe = () => {
             id="globe-bg"
             ref={mountRef}
             className="globe-container"
-            style={{ scale, opacity, filter, y }}
+            style={{ scale, opacity, y, willChange: "transform, opacity" }}
         ></motion.div>
     );
 };

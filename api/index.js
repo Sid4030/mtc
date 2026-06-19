@@ -58,9 +58,7 @@ connectToDatabase().catch((err) => console.error('❌ MongoDB connection error:'
 let globalTransporter = null;
 if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
   globalTransporter = nodemailer.createTransport({
-    pool: true, // Pool connections to handle high concurrent traffic
-    maxConnections: 5,
-    maxMessages: 100,
+    // Removed pool: true to prevent "Connection expired" errors in serverless environments
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
@@ -293,10 +291,13 @@ app.post('/api/register', async (req, res) => {
           ]
         };
 
-        // Send email asynchronously so it doesn't block the API response
-        globalTransporter.sendMail(mailOptions)
-          .then(() => console.log('Confirmation email sent to', email))
-          .catch((mailError) => console.error('Error sending confirmation email:', mailError));
+        // Await the email sending to ensure Vercel doesn't freeze the function before it finishes
+        try {
+          await globalTransporter.sendMail(mailOptions);
+          console.log('Confirmation email sent to', email);
+        } catch (mailError) {
+          console.error('Error sending confirmation email:', mailError);
+        }
       } catch (mailSetupError) {
         console.error('Error setting up confirmation email:', mailSetupError);
       }
