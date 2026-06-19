@@ -6,6 +6,7 @@
   width: 300px;
   perspective: 1000px;
   cursor: pointer;
+  will-change: transform;
 }
 
 .bootcamp-promo-card {
@@ -251,8 +252,7 @@
 .bootcamp-promo-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(5, 5, 5, 0.8);
-  backdrop-filter: blur(8px);
+  background: rgba(5, 5, 5, 0.95);
   z-index: 9999;
   display: flex;
   justify-content: center;

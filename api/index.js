@@ -224,7 +224,7 @@ app.post('/api/register', async (req, res) => {
                   <tr>
                     <td style="padding: 15px; text-align: center; border-right: 1px solid #1f1f1f; width: 33%;">
                       <div style="color: #8b949e; font-size: 11px; text-transform: uppercase; margin-bottom: 5px;">Date</div>
-                      <div style="color: #ffffff; font-size: 13px; font-weight: bold;">TBA</div>
+                      <div style="color: #ffffff; font-size: 13px; font-weight: bold;">25th June</div>
                     </td>
                     <td style="padding: 15px; text-align: center; border-right: 1px solid #1f1f1f; width: 33%;">
                       <div style="color: #8b949e; font-size: 11px; text-transform: uppercase; margin-bottom: 5px;">Time</div>

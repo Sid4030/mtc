@@ -326,10 +326,8 @@ body {
 }
 
 .msft-nav.scrolled {
-    background: rgba(4, 4, 8, 0.72) !important;
+    background: rgba(4, 4, 8, 0.95) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    backdrop-filter: blur(10px) saturate(120%);
-    -webkit-backdrop-filter: blur(10px) saturate(120%);
 }
 
 .msft-nav-left {
@@ -455,9 +453,7 @@ body {
 .nav-menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(5, 5, 5, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(5, 5, 5, 0.98);
     z-index: 2000;
     display: none;
     opacity: 0;
@@ -813,10 +809,8 @@ body {
     align-items: flex-start;
     padding: 16px 18px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
 }
 
 .contact-icon {
@@ -894,12 +888,10 @@ body {
 }
 
 .contact-right {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(30, 30, 30, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 1.5rem;
     padding: clamp(18px, 3vw, 42px);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
 }
 
@@ -1213,9 +1205,7 @@ button,
 
 /* Glass Magnetic Interactivity */
 .glass-magnetic {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background: rgba(40, 40, 40, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
     border-radius: 50px;
@@ -1363,9 +1353,7 @@ button,
     text-decoration: none;
     color: #fff;
     overflow: hidden;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    background: linear-gradient(135deg, rgba(40, 40, 40, 0.9), rgba(20, 20, 20, 0.95));
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
