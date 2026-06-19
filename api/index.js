@@ -265,7 +265,7 @@ app.post('/api/register', async (req, res) => {
                   
                   <p style="color: #8b949e; font-size: 10px; font-family: monospace; letter-spacing: 2px; margin: 0 0 20px 0;">MS-TECH-ID-6115</p>
 
-                  <a href="https://microsoft-tech-community.vercel.app" style="color: #ffffff; font-size: 11px; font-weight: bold; text-decoration: none; letter-spacing: 1px; text-transform: uppercase;">VISIT OFFICIAL WEBSITE</a>
+                  <a href="https://mtc-amity.tech" style="color: #ffffff; font-size: 11px; font-weight: bold; text-decoration: none; letter-spacing: 1px; text-transform: uppercase;">VISIT OFFICIAL WEBSITE</a>
                 </div>
               </div>
 
