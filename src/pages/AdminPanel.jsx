@@ -694,7 +694,7 @@ const AdminPanel = () => {
 
       {/* Grading Modal */}
       {gradingModalOpen && selectedUser && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80">
           <div className="bg-[#111] border border-white/10 rounded-2xl p-6 w-full max-w-md relative shadow-2xl">
             <button 
               onClick={() => setGradingModalOpen(false)}

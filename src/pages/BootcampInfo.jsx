@@ -562,42 +562,54 @@ const BootcampInfo = () => {
                               {sessionDb.modules.map(mod => {
                                 const isVerified = userProgress?.verifiedModules?.includes(mod.moduleId);
                                 return (
-                                  <div key={mod.moduleId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f5f5f5', padding: '15px', borderRadius: '8px', border: '1px solid #e0e0e0' }}>
+                                  <div key={mod.moduleId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f5f5f5', padding: '15px', borderRadius: '8px', border: '1px solid #e0e0e0', flexWrap: 'wrap', gap: '10px' }}>
                                     <div>
+                                      {/* LOCKED STATE - Blurry Module Name */}
+                                      <strong style={{ color: '#1d1c1c', display: 'block', fontSize: '1.1rem', filter: 'blur(5px)', userSelect: 'none' }}>Hidden Module Name Placeholder</strong>
+                                      {/* ORIGINAL STATE (Uncomment later):
                                       <strong style={{ color: '#1d1c1c', display: 'block', fontSize: '1.1rem' }}>{mod.moduleName}</strong>
+                                      */}
                                       <span style={{ fontSize: '0.9rem', color: '#666' }}>Requires MS Learn Badge</span>
                                     </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                                       {mod.moduleUrl && (
-                                        <a href={mod.moduleUrl} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-                                          <button 
-                                            style={{ 
-                                              background: '#ffffff', 
-                                              color: '#1d1c1c', 
-                                              padding: '8px 16px', 
-                                              borderRadius: '6px', 
-                                              border: '2px solid #1d1c1c', 
-                                              cursor: 'pointer', 
-                                              fontWeight: '900', 
-                                              fontFamily: "'DM Sans', sans-serif",
-                                              textTransform: 'uppercase',
-                                              fontSize: '0.85rem',
-                                              boxShadow: '4px 4px 0px #1d1c1c',
-                                              transition: 'all 0.1s ease',
-                                              display: 'flex',
-                                              alignItems: 'center',
-                                              gap: '6px'
-                                            }}
-                                            onMouseOver={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '2px 2px 0px #1d1c1c'; }}
-                                            onMouseOut={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #1d1c1c'; }}
-                                          >
-                                            Go to Module 
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                              <line x1="7" y1="17" x2="17" y2="7"></line>
-                                              <polyline points="7 7 17 7 17 17"></polyline>
-                                            </svg>
+                                        <>
+                                          {/* LOCKED STATE - Disabled Go to Module Button */}
+                                          <button disabled style={{ background: '#30363d', color: '#8b949e', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'not-allowed', fontWeight: 'bold', fontSize: '0.85rem' }}>
+                                            🔒 Link Locked
                                           </button>
-                                        </a>
+                                          {/* ORIGINAL STATE (Uncomment later):
+                                          <a href={mod.moduleUrl} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                                            <button 
+                                              style={{ 
+                                                background: '#ffffff', 
+                                                color: '#1d1c1c', 
+                                                padding: '8px 16px', 
+                                                borderRadius: '6px', 
+                                                border: '2px solid #1d1c1c', 
+                                                cursor: 'pointer', 
+                                                fontWeight: '900', 
+                                                fontFamily: "'DM Sans', sans-serif",
+                                                textTransform: 'uppercase',
+                                                fontSize: '0.85rem',
+                                                boxShadow: '4px 4px 0px #1d1c1c',
+                                                transition: 'all 0.1s ease',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '6px'
+                                              }}
+                                              onMouseOver={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '2px 2px 0px #1d1c1c'; }}
+                                              onMouseOut={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #1d1c1c'; }}
+                                            >
+                                              Go to Module 
+                                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                <polyline points="7 7 17 7 17 17"></polyline>
+                                              </svg>
+                                            </button>
+                                          </a>
+                                          */}
+                                        </>
                                       )}
                                       {isVerified ? (
                                         <div style={{ display: 'flex', alignItems: 'center', color: '#2ea043', fontWeight: 'bold' }}>
