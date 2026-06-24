@@ -7,11 +7,11 @@ import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
 import path from 'path';
 
-import Registration from './models/Registration.js';
-import badgesRouter from './routes/badges.js';
-import projectsRouter from './routes/projects.js';
-import adminRouter from './routes/admin.js';
-import publicRouter from './routes/public.js';
+import Registration from '../backend/models/Registration.js';
+import badgesRouter from '../backend/routes/badges.js';
+import projectsRouter from '../backend/routes/projects.js';
+import adminRouter from '../backend/routes/admin.js';
+import publicRouter from '../backend/routes/public.js';
 
 dotenv.config();
 

@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 dotenv.config();
 
 // We need to import the Registration model to fetch users from DB
-import Registration from './api/models/Registration.js';
+import Registration from './backend/models/Registration.js';
 
 // Function to generate the HTML template for a specific user
 const generateTicketHTML = (name) => `
