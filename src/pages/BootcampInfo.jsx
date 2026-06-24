@@ -6,6 +6,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './BootcampInfo.css';
 import BootcampHighlights from '../components/BootcampHighlights';
 import BootcampTeam from '../components/BootcampTeam';
+import BadgeVerificationModal from '../components/BadgeVerificationModal';
+import ProjectSubmissionModal from '../components/ProjectSubmissionModal';
+import Leaderboard from '../components/Leaderboard';
+
 import kapidhwajLogo from '../assets/kapidhwaj_logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -32,6 +36,52 @@ const BootcampInfo = () => {
   const [contentVisible, setContentVisible] = useState(false);
   const overlayRef = useRef(null);
   const expandedCardRef = useRef(null);
+
+  // New states for badges integration
+  const [dbSessions, setDbSessions] = useState([]);
+  const [userEmail, setUserEmail] = useState('');
+  const [userProgress, setUserProgress] = useState(null);
+  const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
+  const [activeModule, setActiveModule] = useState(null);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+
+
+  // Fetch session configs on mount
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('trackerEmail');
+    if (savedEmail) setUserEmail(savedEmail);
+
+    fetch('/api/badges/sessions')
+      .then(res => res.json())
+      .then(data => setDbSessions(data))
+      .catch(err => console.error("Error fetching sessions:", err));
+  }, []);
+
+  const fetchProgress = async (email, cardNum) => {
+    try {
+      const res = await fetch(`/api/badges/progress/${email}/session_${cardNum}`);
+      if (res.ok) {
+        const data = await res.json();
+        const wasIncomplete = userProgress ? !userProgress.allModulesCompleted : true;
+        setUserProgress(data);
+        
+
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (expandedCard && userEmail && expandedCard.num !== '🏆') {
+      fetchProgress(userEmail, expandedCard.num);
+    }
+  }, [expandedCard, userEmail]);
+
+  const handleVerifySuccess = (email) => {
+    setUserEmail(email);
+    if (expandedCard) fetchProgress(email, expandedCard.num);
+  };
 
   const handleCardClick = (session, index, event) => {
     if (expandedCard) return;
@@ -436,7 +486,18 @@ const BootcampInfo = () => {
         </div>
 
         {/* Roadmap Title perfectly positioned under waves */}
-        <h2 className="timeline-section-title" style={{ position: 'relative', zIndex: 20, marginTop: '20px' }}>THE ROADMAP</h2>
+        <div style={{ position: 'relative', zIndex: 20, marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
+          <h2 className="timeline-section-title" style={{ margin: 0 }}>THE ROADMAP</h2>
+          {/* <button 
+            className="mythical-hero-btn" 
+            onClick={() => {
+              document.getElementById('leaderboard')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={{ padding: '10px 24px', fontSize: '1rem', border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg, #1a0f2e, #0f0518)', color: '#fd74fd', boxShadow: '0 0 15px rgba(253, 116, 253, 0.4)', borderRadius: '30px' }}
+          >
+            VIEW LEADERBOARD ↓
+          </button> */}
+        </div>
         <div className="timeline-container" style={{ position: 'relative', zIndex: 10 }}>
           <div className="timeline-central-line"></div>
           
@@ -471,7 +532,7 @@ const BootcampInfo = () => {
       
       {/* Expanded Roadmap Card Overlay */}
       {expandedCard && (
-        <div className="expanded-card-backdrop" ref={overlayRef} onClick={closeExpandedCard} style={{ position: 'fixed', inset: 0, background: 'rgba(5, 5, 5, 0.8)', backdropFilter: 'blur(8px)', zIndex: 10000, opacity: 0 }}>
+        <div className="expanded-card-backdrop" ref={overlayRef} onClick={closeExpandedCard} style={{ position: 'fixed', inset: 0, background: 'rgba(10, 10, 10, 0.95)', zIndex: 10000, opacity: 0 }}>
           <div className="timeline-card expanded" ref={expandedCardRef} onClick={e => e.stopPropagation()} data-lenis-prevent="true" style={{ background: '#fff', border: '4px solid #1d1c1c', borderRadius: '16px', boxShadow: '8px 8px 0 #1d1c1c', padding: contentVisible ? '3rem' : '2rem', position: 'fixed', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
             
             {contentVisible ? (
@@ -485,10 +546,139 @@ const BootcampInfo = () => {
                   
                   <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '1rem' }}>About Project</h4>
                   <div style={{ color: '#444', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>{expandedCard.expandedDesc || expandedCard.desc}</div>
+
+                  {expandedCard.num !== '🏆' && (
+                    <div style={{ marginTop: '30px' }}>
+                      <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '15px' }}>Modules & Validation</h4>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                        {(() => {
+                          const sessionDb = dbSessions.find(s => s.sessionId === `session_${expandedCard.num}`);
+                          if (!sessionDb) return <p style={{ color: '#444' }}>Loading modules...</p>;
+                          
+                          const isAllComplete = userProgress?.allModulesCompleted;
+                          
+                          return (
+                            <>
+                              {sessionDb.modules.map(mod => {
+                                const isVerified = userProgress?.verifiedModules?.includes(mod.moduleId);
+                                return (
+                                  <div key={mod.moduleId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f5f5f5', padding: '15px', borderRadius: '8px', border: '1px solid #e0e0e0' }}>
+                                    <div>
+                                      <strong style={{ color: '#1d1c1c', display: 'block', fontSize: '1.1rem' }}>{mod.moduleName}</strong>
+                                      <span style={{ fontSize: '0.9rem', color: '#666' }}>Requires MS Learn Badge</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                      {mod.moduleUrl && (
+                                        <a href={mod.moduleUrl} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                                          <button 
+                                            style={{ 
+                                              background: '#ffffff', 
+                                              color: '#1d1c1c', 
+                                              padding: '8px 16px', 
+                                              borderRadius: '6px', 
+                                              border: '2px solid #1d1c1c', 
+                                              cursor: 'pointer', 
+                                              fontWeight: '900', 
+                                              fontFamily: "'DM Sans', sans-serif",
+                                              textTransform: 'uppercase',
+                                              fontSize: '0.85rem',
+                                              boxShadow: '4px 4px 0px #1d1c1c',
+                                              transition: 'all 0.1s ease',
+                                              display: 'flex',
+                                              alignItems: 'center',
+                                              gap: '6px'
+                                            }}
+                                            onMouseOver={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '2px 2px 0px #1d1c1c'; }}
+                                            onMouseOut={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #1d1c1c'; }}
+                                          >
+                                            Go to Module 
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                              <line x1="7" y1="17" x2="17" y2="7"></line>
+                                              <polyline points="7 7 17 7 17 17"></polyline>
+                                            </svg>
+                                          </button>
+                                        </a>
+                                      )}
+                                      {isVerified ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', color: '#2ea043', fontWeight: 'bold' }}>
+                                          <svg className="animated-tick" viewBox="0 0 24 24" fill="none" stroke="#2ea043" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px', marginRight: '6px' }}>
+                                            <path className="tick-path" d="M20 6L9 17l-5-5" style={{ strokeDasharray: 50, strokeDashoffset: 50, animation: 'drawTick 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards' }} />
+                                          </svg>
+                                          Verified
+                                        </div>
+                                      ) : (
+                                        <>
+                                          {/* Locked state for now */}
+                                          <button disabled style={{ background: '#30363d', color: '#8b949e', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'not-allowed', fontWeight: 'bold' }}>
+                                            🔒 Verify Badge
+                                          </button>
+                                          {/* Original active button:
+                                          <button onClick={() => { setActiveModule(mod); setIsVerifyModalOpen(true); }} style={{ background: '#1d1c1c', color: '#fff', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>
+                                            Verify Badge
+                                          </button>
+                                          */}
+                                        </>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              
+                              <div style={{ marginTop: '20px', borderTop: '2px dashed #ccc', paddingTop: '20px' }}>
+                                <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '10px' }}>Final Project</h4>
+                                <p style={{ color: '#444', marginBottom: '15px' }}>Complete all modules to unlock the final project submission.</p>
+                                {/* Locked state for now */}
+                                <button 
+                                  disabled
+                                  className="mythical-hero-btn"
+                                  style={{ 
+                                    width: '100%', padding: '16px', fontSize: '1.2rem', 
+                                    background: '#30363d', 
+                                    color: '#8b949e',
+                                    cursor: 'not-allowed',
+                                    border: 'none', borderRadius: '8px', fontWeight: 'bold',
+                                    boxShadow: 'none'
+                                  }}
+                                >
+                                  🔒 Submit Final Project (Locked)
+                                </button>
+                                {/* Original active button:
+                                <button 
+                                  onClick={() => setIsProjectModalOpen(true)}
+                                  className="mythical-hero-btn"
+                                  style={{ 
+                                    width: '100%', padding: '16px', fontSize: '1.2rem', 
+                                    background: undefined, 
+                                    color: '#fff',
+                                    cursor: 'pointer',
+                                    border: 'none', borderRadius: '8px', fontWeight: 'bold',
+                                    boxShadow: '0 0 20px rgba(253, 116, 253, 0.4)'
+                                  }}
+                                >
+                                  Submit Final Project
+                                </button>
+                                */}
+                              </div>
+                            </>
+                          );
+                        })()}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <div style={{ marginTop: 'auto', paddingTop: '2rem', paddingBottom: '1rem', borderTop: '2px solid rgba(0,0,0,0.1)' }}>
-                  <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', cursor: 'not-allowed', filter: 'grayscale(0.8)', border: 'none' }}>Session Link: Coming Soon</button>
+                  {expandedCard.num === '1' || expandedCard.num === 1 ? (
+                    <a href="https://teams.microsoft.com/meet/24122598981924?p=lk3mZe3WOksrcTk58F" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #5b5fc7, #4a4d9e)' }}>
+                        Join Teams Meeting
+                      </button>
+                    </a>
+                  ) : (
+                    <button disabled className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'not-allowed', color: '#8b949e', background: '#30363d', boxShadow: 'none' }}>
+                      🔒 Teams Link Locked
+                    </button>
+                  )}
                 </div>
               </div>
             ) : (
@@ -507,6 +697,24 @@ const BootcampInfo = () => {
           </div>
         </div>
       )}
+
+      {/* Leaderboard Section (Commented out for now) */}
+      {/* <Leaderboard /> */}
+
+      {/* Modals and Overlays */}
+      <BadgeVerificationModal 
+        isOpen={isVerifyModalOpen} 
+        onClose={() => setIsVerifyModalOpen(false)} 
+        module={activeModule}
+        session={dbSessions.find(s => s.sessionId === `session_${expandedCard?.num}`)}
+        onVerifySuccess={handleVerifySuccess}
+      />
+      <ProjectSubmissionModal
+        isOpen={isProjectModalOpen}
+        onClose={() => setIsProjectModalOpen(false)}
+        session={dbSessions.find(s => s.sessionId === `session_${expandedCard?.num}`)}
+      />
+
 
     </div>
   );

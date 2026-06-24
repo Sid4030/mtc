@@ -797,3 +797,7 @@
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(var(--translate-to), 0, 0); }
 }
+
+@keyframes drawTick {
+  to { stroke-dashoffset: 0; }
+}

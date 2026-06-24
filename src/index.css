@@ -1222,9 +1222,6 @@ button,
     will-change: transform, opacity;
 }
 
-/* =============================================
-   PERFORMANCE: Optimized will-change for off-screen sections
-   ============================================= */
 #page-msa,
 #page2,
 #page3,

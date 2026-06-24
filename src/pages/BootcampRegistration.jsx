@@ -86,6 +86,13 @@ const BootcampRegistration = () => {
       const data = await response.json();
       
       if (response.ok) {
+        // Trigger emails in the background (fire-and-forget, Vercel safe since backend awaits it)
+        fetch(`${API_URL}/api/send-welcome-emails`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email, name: formData.name })
+        }).catch(err => console.error("Failed to trigger welcome emails:", err));
+
         gsap.to(boardRef.current, {
           scale: 0.9, opacity: 0, duration: 0.4, onComplete: () => {
             setShowSuccess(true);
