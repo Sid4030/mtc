@@ -564,7 +564,15 @@ const BootcampInfo = () => {
                                 return (
                                   <div key={mod.moduleId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f5f5f5', padding: '15px', borderRadius: '8px', border: '1px solid #e0e0e0', flexWrap: 'wrap', gap: '10px' }}>
                                     <div>
-                                      <strong style={{ color: '#1d1c1c', display: 'block', fontSize: '1.1rem' }}>{mod.moduleName}</strong>
+                                      <strong style={{ 
+                                        color: '#1d1c1c', 
+                                        display: 'block', 
+                                        fontSize: '1.1rem',
+                                        filter: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
+                                        userSelect: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'none' : 'auto'
+                                      }}>
+                                        {mod.moduleName}
+                                      </strong>
                                       <span style={{ fontSize: '0.9rem', color: '#666' }}>Requires MS Learn Badge</span>
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
@@ -607,7 +615,19 @@ const BootcampInfo = () => {
                                           Verified
                                         </div>
                                       ) : (
-                                          <button onClick={() => { setActiveModule(mod); setIsVerifyModalOpen(true); }} style={{ background: '#1d1c1c', color: '#fff', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>
+                                          <button 
+                                            onClick={() => { setActiveModule(mod); setIsVerifyModalOpen(true); }} 
+                                            disabled={expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆'}
+                                            style={{ 
+                                              background: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
+                                              color: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
+                                              padding: '8px 16px', 
+                                              borderRadius: '6px', 
+                                              border: 'none', 
+                                              cursor: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
+                                              fontWeight: 'bold' 
+                                            }}
+                                          >
                                             Verify Badge
                                           </button>
                                       )}
@@ -619,20 +639,37 @@ const BootcampInfo = () => {
                               <div style={{ marginTop: '20px', borderTop: '2px dashed #ccc', paddingTop: '20px' }}>
                                 <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '10px' }}>Final Project</h4>
                                 <p style={{ color: '#444', marginBottom: '15px' }}>Complete all modules to unlock the final project submission.</p>
-                                <button 
-                                  onClick={() => setIsProjectModalOpen(true)}
-                                  className="mythical-hero-btn"
-                                  style={{ 
-                                    width: '100%', padding: '16px', fontSize: '1.2rem', 
-                                    background: undefined, 
-                                    color: '#fff',
-                                    cursor: 'pointer',
-                                    border: 'none', borderRadius: '8px', fontWeight: 'bold',
-                                    boxShadow: '0 0 20px rgba(253, 116, 253, 0.4)'
-                                  }}
-                                >
-                                  Submit Final Project
-                                </button>
+                                {expandedCard.num === '1' || expandedCard.num === 1 || expandedCard.num === '🏆' ? (
+                                  <button 
+                                    onClick={() => setIsProjectModalOpen(true)}
+                                    className="mythical-hero-btn"
+                                    style={{ 
+                                      width: '100%', padding: '16px', fontSize: '1.2rem', 
+                                      background: undefined, 
+                                      color: '#fff',
+                                      cursor: 'pointer',
+                                      border: 'none', borderRadius: '8px', fontWeight: 'bold',
+                                      boxShadow: '0 0 20px rgba(253, 116, 253, 0.4)'
+                                    }}
+                                  >
+                                    Submit Final Project
+                                  </button>
+                                ) : (
+                                  <button 
+                                    disabled
+                                    className="mythical-hero-btn"
+                                    style={{ 
+                                      width: '100%', padding: '16px', fontSize: '1.2rem', 
+                                      background: '#ccc', 
+                                      color: '#666',
+                                      cursor: 'not-allowed',
+                                      border: 'none', borderRadius: '8px', fontWeight: 'bold',
+                                      boxShadow: 'none'
+                                    }}
+                                  >
+                                    🔒 Submit Final Project (Locked)
+                                  </button>
+                                )}
                               </div>
                             </>
                           );

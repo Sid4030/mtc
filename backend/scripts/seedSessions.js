@@ -23,18 +23,21 @@ const seedSessions = async () => {
             modules: [
                 {
                     moduleId: 's1_m1',
-                    moduleName: 'Perform basic operations on numbers in C#',
-                    expectedBadgeTitle: 'Perform basic operations on numbers in C#'
+                    moduleName: 'Introduction to AI concepts',
+                    expectedBadgeTitle: 'Introduction to AI concepts',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/get-started-ai-fundamentals/?wt.mc_id=studentamb_496702'
                 },
                 {
                     moduleId: 's1_m2',
-                    moduleName: 'Guided project - Calculate and print student grades',
-                    expectedBadgeTitle: 'Guided project - Calculate and print student grades'
+                    moduleName: 'Get started with AI in Azure',
+                    expectedBadgeTitle: 'Get started with AI in Azure',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/?wt.mc_id=studentamb_496702'
                 },
                 {
                     moduleId: 's1_m3',
-                    moduleName: 'Guided project - Calculate final GPA',
-                    expectedBadgeTitle: 'Guided project - Calculate final GPA'
+                    moduleName: 'Explore Generative AI',
+                    expectedBadgeTitle: 'Explore generative AI',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/explore-generative-ai/?wt.mc_id=studentamb_496702'
                 }
             ]
         });
