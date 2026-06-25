@@ -68,7 +68,7 @@ router.get('/participants', async (req, res) => {
         sessionData[sId] = {
           modulesCompleted: sProgress.length,
           totalModules: session.modules.length,
-          projectUrl: sSub ? sSub.projectUrl : null,
+          pdfUrl: sSub ? sSub.pdfUrl : null,
           marks: projectMarks,
           totalMarks: moduleMarks + (projectMarks || 0),
           feedback: sSub ? sSub.feedback : null

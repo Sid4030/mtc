@@ -619,22 +619,6 @@ const BootcampInfo = () => {
                               <div style={{ marginTop: '20px', borderTop: '2px dashed #ccc', paddingTop: '20px' }}>
                                 <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '10px' }}>Final Project</h4>
                                 <p style={{ color: '#444', marginBottom: '15px' }}>Complete all modules to unlock the final project submission.</p>
-                                {/* Locked state for now */}
-                                <button 
-                                  disabled
-                                  className="mythical-hero-btn"
-                                  style={{ 
-                                    width: '100%', padding: '16px', fontSize: '1.2rem', 
-                                    background: '#30363d', 
-                                    color: '#8b949e',
-                                    cursor: 'not-allowed',
-                                    border: 'none', borderRadius: '8px', fontWeight: 'bold',
-                                    boxShadow: 'none'
-                                  }}
-                                >
-                                  🔒 Submit Final Project (Locked)
-                                </button>
-                                {/* Original active button:
                                 <button 
                                   onClick={() => setIsProjectModalOpen(true)}
                                   className="mythical-hero-btn"
@@ -649,7 +633,6 @@ const BootcampInfo = () => {
                                 >
                                   Submit Final Project
                                 </button>
-                                */}
                               </div>
                             </>
                           );

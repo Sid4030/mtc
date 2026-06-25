@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const ProjectSubmissionModal = ({ isOpen, onClose, session, onProjectSubmitSuccess }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [projectUrl, setProjectUrl] = useState('');
+  const [pdfUrl, setPdfUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -34,7 +34,7 @@ const ProjectSubmissionModal = ({ isOpen, onClose, session, onProjectSubmitSucce
           name,
           email,
           sessionId: session.sessionId,
-          projectUrl
+          pdfUrl
         })
       });
 
@@ -85,8 +85,8 @@ const ProjectSubmissionModal = ({ isOpen, onClose, session, onProjectSubmitSucce
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} required style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#1d1c1c', border: '1px solid #444', color: '#fff' }} placeholder="Your registered email" />
             </div>
             <div>
-              <label style={{ display: 'block', color: '#ccc', marginBottom: '5px', fontSize: '0.9rem' }}>Project URL (GitHub / Live Link)</label>
-              <input type="url" value={projectUrl} onChange={e => setProjectUrl(e.target.value)} required style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#1d1c1c', border: '1px solid #444', color: '#fff' }} placeholder="https://github.com/..." />
+              <label style={{ display: 'block', color: '#ccc', marginBottom: '5px', fontSize: '0.9rem' }}>PDF URL</label>
+              <input type="url" value={pdfUrl} onChange={e => setPdfUrl(e.target.value)} required style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#1d1c1c', border: '1px solid #444', color: '#fff' }} placeholder="https://..." />
             </div>
 
             <button type="submit" disabled={loading || success} className="mythical-hero-btn" style={{ width: '100%', padding: '14px', marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

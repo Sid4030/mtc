@@ -4,7 +4,7 @@ import { getSecondaryConnection } from '../secondaryDb.js';
 const projectSubmissionSchema = new mongoose.Schema({
   email: { type: String, required: true },
   sessionId: { type: String, required: true },
-  projectUrl: { type: String, required: true }, // GitHub repo or project link
+  pdfUrl: { type: String, required: true }, // PDF link (Google Drive / OneDrive)
   status: { type: String, enum: ['PENDING', 'APPROVED', 'REJECTED'], default: 'PENDING' },
   marks: { type: Number, default: null }, // Assigned by admin during grading
   feedback: { type: String, default: null }, // Feedback from admin

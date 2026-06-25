@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.post('/submit', async (req, res) => {
     try {
-        const { name, email, sessionId, projectUrl } = req.body;
+        const { name, email, sessionId, pdfUrl } = req.body;
 
-        if (!email || !sessionId || !projectUrl) {
+        if (!email || !sessionId || !pdfUrl) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
@@ -21,12 +21,12 @@ router.post('/submit', async (req, res) => {
         // Save submission
         const existingSubmission = await ProjectSubmission.findOne({ email, sessionId });
         if (existingSubmission) {
-            existingSubmission.projectUrl = projectUrl;
+            existingSubmission.pdfUrl = pdfUrl;
             existingSubmission.status = 'PENDING';
             existingSubmission.submittedAt = new Date();
             await existingSubmission.save();
         } else {
-            await ProjectSubmission.create({ email, sessionId, projectUrl });
+            await ProjectSubmission.create({ email, sessionId, pdfUrl });
         }
 
         // Upsert Participant

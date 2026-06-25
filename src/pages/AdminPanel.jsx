@@ -216,7 +216,7 @@ const AdminPanel = () => {
 
   const openGradingModal = (user, sessionId) => {
     const sessionData = user.sessions[sessionId];
-    if (!sessionData.projectUrl) {
+    if (!sessionData.pdfUrl) {
       alert("This user hasn't submitted a project for this session yet.");
       return;
     }
@@ -707,7 +707,7 @@ const AdminPanel = () => {
             <div className="bg-white/5 rounded-xl p-4 mb-6 border border-white/10">
               <div className="text-sm text-white/60 mb-2">Project URL:</div>
               <a 
-                href={selectedUser.sessions[selectedSessionId].projectUrl} 
+                href={selectedUser.sessions[selectedSessionId].pdfUrl} 
                 target="_blank" 
                 rel="noreferrer"
                 className="text-blue-400 hover:text-blue-300 font-medium break-all flex items-center gap-2"
