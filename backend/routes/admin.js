@@ -26,17 +26,29 @@ router.get('/leaderboard', async (req, res) => {
       const verifiedCount = userProgress.length;
       const completedCount = userSubmissions.length;
 
+      let earliestSubmission = Infinity;
+      if (userSubmissions.length > 0) {
+        earliestSubmission = Math.min(...userSubmissions.map(s => new Date(s.submittedAt).getTime()));
+      } else if (userProgress.length > 0) {
+        earliestSubmission = Math.min(...userProgress.map(p => new Date(p.submittedAt).getTime()));
+      }
+
       return {
         email: p.email,
         name: p.name,
         totalMarks,
         verifiedCount,
-        completedCount
+        completedCount,
+        earliestSubmission
       };
     });
 
-    // Sort descending
-    leaderboard.sort((a, b) => b.totalMarks - a.totalMarks || b.completedCount - a.completedCount);
+    // Sort descending by totalMarks, then completedCount, then ascending by earliestSubmission
+    leaderboard.sort((a, b) => 
+      b.totalMarks - a.totalMarks || 
+      b.completedCount - a.completedCount ||
+      a.earliestSubmission - b.earliestSubmission
+    );
 
     res.json(leaderboard);
   } catch (error) {
@@ -57,25 +69,33 @@ router.get('/participants', async (req, res) => {
       const userSubmissions = submissions.filter(sub => sub.email === p.email);
       
       const sessionData = {};
-      sessions.forEach(session => {
-        const sId = session.sessionId;
+      // Hardcode 8 sessions to ensure data is always returned
+      for (let i = 1; i <= 8; i++) {
+        const sId = `session_${i}`;
         const sProgress = userProgress.filter(pr => pr.sessionId === sId);
         const sSub = userSubmissions.find(sub => sub.sessionId === sId);
         
+        // Find the total modules for this session if it exists in the DB
+        const sessionInDb = sessions.find(s => s.sessionId === sId);
+        const totalModules = sessionInDb ? sessionInDb.modules.length : 0;
+
         const moduleMarks = sProgress.length * 5;
         const projectMarks = sSub && sSub.marks !== null ? sSub.marks : null;
         
         sessionData[sId] = {
           modulesCompleted: sProgress.length,
-          totalModules: session.modules.length,
-          pdfUrl: sSub ? sSub.pdfUrl : null,
+          totalModules: totalModules,
+          pdfUrl: sSub ? (sSub.pdfUrl || sSub.projectUrl) : null,
           marks: projectMarks,
           totalMarks: moduleMarks + (projectMarks || 0),
           feedback: sSub ? sSub.feedback : null
         };
-      });
+      }
 
-      const totalMarks = sessions.reduce((sum, s) => sum + sessionData[s.sessionId].totalMarks, 0);
+      let totalMarks = 0;
+      for (let i = 1; i <= 8; i++) {
+        totalMarks += sessionData[`session_${i}`].totalMarks;
+      }
 
       return {
         email: p.email,

@@ -650,7 +650,7 @@ const AdminPanel = () => {
                         </td>
                         {[1,2,3,4,5,6,7,8].map(s => {
                           const sData = user.sessions[`session_${s}`] || {};
-                          const hasProject = !!sData.projectUrl;
+                          const hasProject = !!sData.pdfUrl;
                           const isGraded = sData.marks !== null;
                           let pillClass = "bg-white/10 text-white/50";
                           let label = "—";
@@ -718,11 +718,11 @@ const AdminPanel = () => {
 
             <form onSubmit={submitGrade} className="space-y-4">
               <div>
-                <label className="block text-white/70 text-sm font-bold mb-2">Marks (out of 100)</label>
+                <label className="block text-white/70 text-sm font-bold mb-2">Marks (out of 20)</label>
                 <input
                   type="number"
                   min="0"
-                  max="100"
+                  max="20"
                   value={marks}
                   onChange={(e) => setMarks(e.target.value)}
                   className="w-full px-4 py-3 bg-black/50 border border-white/20 rounded-xl text-white focus:border-blue-500 focus:outline-none"

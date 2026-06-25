@@ -488,7 +488,7 @@ const BootcampInfo = () => {
         {/* Roadmap Title perfectly positioned under waves */}
         <div style={{ position: 'relative', zIndex: 20, marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
           <h2 className="timeline-section-title" style={{ margin: 0 }}>THE ROADMAP</h2>
-          {/* <button 
+          <button 
             className="mythical-hero-btn" 
             onClick={() => {
               document.getElementById('leaderboard')?.scrollIntoView({ behavior: 'smooth' });
@@ -496,7 +496,7 @@ const BootcampInfo = () => {
             style={{ padding: '10px 24px', fontSize: '1rem', border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg, #1a0f2e, #0f0518)', color: '#fd74fd', boxShadow: '0 0 15px rgba(253, 116, 253, 0.4)', borderRadius: '30px' }}
           >
             VIEW LEADERBOARD ↓
-          </button> */}
+          </button>
         </div>
         <div className="timeline-container" style={{ position: 'relative', zIndex: 10 }}>
           <div className="timeline-central-line"></div>
@@ -674,7 +674,7 @@ const BootcampInfo = () => {
       )}
 
       {/* Leaderboard Section (Commented out for now) */}
-      {/* <Leaderboard /> */}
+      <Leaderboard />
 
       {/* Modals and Overlays */}
       <BadgeVerificationModal 

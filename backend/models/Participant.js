@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { getSecondaryConnection } from '../secondaryDb.js';
 
 const participantSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -7,7 +6,6 @@ const participantSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-const conn = getSecondaryConnection();
-const Participant = conn.models.Participant || conn.model('Participant', participantSchema);
+const Participant = mongoose.models.Participant || mongoose.model('Participant', participantSchema);
 
 export default Participant;
