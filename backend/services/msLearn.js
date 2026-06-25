@@ -13,18 +13,18 @@ export async function verifyMsLearnBadge(badgeUrl) {
     sharingId = sharingIdMatch[1];
 
     // share URL format: https://learn.microsoft.com/en-us/users/username/achievements/share/en-us/username/achievementId
-    let match = badgeUrl.match(/share\/([^\/]+)\/([^\/]+)\/([^\/\?]+)/);
+    let match = badgeUrl.match(/share\/([^\/]+)\/([^\/]+)\/([^\/\?#]+)/);
     if (match) {
       locale = match[1];
       username = match[2];
       achievementId = match[3];
     } else {
-        match = badgeUrl.match(/share\/([^\/]+)\/([^\/\?]+)/);
+        match = badgeUrl.match(/share\/([^\/]+)\/([^\/\?#]+)/);
         if (match) {
             username = match[1];
             achievementId = match[2];
         } else {
-            match = badgeUrl.match(/users\/([^\/]+)\/achievements\/([^\/\?]+)/);
+            match = badgeUrl.match(/users\/([^\/]+)\/achievements\/([^\/\?#]+)/);
             if (match) {
               username = match[1];
               achievementId = match[2];
@@ -40,7 +40,8 @@ export async function verifyMsLearnBadge(badgeUrl) {
     
     const response = await fetch(apiUrl, {
       headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
       }
     });
     if (!response.ok) {

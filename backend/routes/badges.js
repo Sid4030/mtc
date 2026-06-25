@@ -39,19 +39,19 @@ router.post('/submit-badge', async (req, res) => {
     // 2. Check if already verified
     const existingProgress = await Progress.findOne({ email, sessionId, moduleId });
     if (existingProgress && existingProgress.verified) {
-      return res.status(400).json({ message: "Module already verified" });
+      return res.status(400).json({ error: "Module already verified" });
     }
 
     // 3. Call MS Learn API
     const verification = await verifyMsLearnBadge(badgeUrl);
     if (!verification.success) {
-      return res.status(400).json({ error: "The URL might be wrong, please check again. This was verified by the MS Learn API to test." });
+      return res.status(400).json({ error: verification.error || "The URL might be wrong, please check again. This was verified by the MS Learn API to test." });
     }
 
     // 4. Compare titles (case insensitive)
     if (verification.title.toLowerCase() !== module.expectedBadgeTitle.toLowerCase()) {
       return res.status(400).json({ 
-        error: "Badge title does not match the expected module. The URL might be wrong, please check again. This was verified by the MS Learn API to test."
+        error: `Badge title does not match. Expected "${module.expectedBadgeTitle}", but got "${verification.title}".`
       });
     }
 

@@ -45,7 +45,7 @@ const BadgeVerificationModal = ({ isOpen, onClose, module, session, onVerifySucc
         });
 
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Failed to verify badge');
+        if (!res.ok) throw new Error(data.error || data.message || 'Failed to verify badge');
 
         localStorage.setItem('trackerEmail', email);
         onVerifySuccess(email); // Triggers the parent to refresh progress
