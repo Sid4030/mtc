@@ -48,28 +48,8 @@ router.post('/submit-badge', async (req, res) => {
       return res.status(400).json({ error: verification.error || "The URL might be wrong, please check again. This was verified by the MS Learn API to test." });
     }
 
-    // 4. Compare titles loosely
-    const foundTitle = verification.title.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const expectedTitle = module.expectedBadgeTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
-    
-    // Alias check for known MS Learn name variations
-    const aliases = {
-      'introductiontoaiconcepts': ['fundamentalaiconcepts']
-    };
-
-    let isMatch = foundTitle.includes(expectedTitle) || expectedTitle.includes(foundTitle);
-    
-    if (!isMatch && aliases[expectedTitle]) {
-      isMatch = aliases[expectedTitle].some(alias => 
-        foundTitle.includes(alias) || alias.includes(foundTitle)
-      );
-    }
-
-    if (!isMatch) {
-      return res.status(400).json({ 
-        error: `Badge title does not match. Expected "${module.expectedBadgeTitle}", but got "${verification.title}".`
-      });
-    }
+    // 4. Compare titles (Skipped - User requested to remove title filter)
+    // Any valid Microsoft Learn badge will now be accepted regardless of title.
 
     // 5. Save progress
     if (existingProgress) {

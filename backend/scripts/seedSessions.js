@@ -49,18 +49,15 @@ const seedSessions = async () => {
             modules: [
                 {
                     moduleId: 's2_m1',
-                    moduleName: 'Describe cloud computing',
-                    expectedBadgeTitle: 'Describe cloud computing'
+                    moduleName: 'Use Azure AI Services for Language in a Microsoft Copilot Studio',
+                    expectedBadgeTitle: 'Use Azure AI Services for Language in a Microsoft Copilot Studio',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/cognitive-service-power-virtual-agents/?wt.mc_id=studentamb_496702'
                 },
                 {
                     moduleId: 's2_m2',
-                    moduleName: 'Perform basic string formatting in C#',
-                    expectedBadgeTitle: 'Perform basic string formatting in C#'
-                },
-                {
-                    moduleId: 's2_m3',
-                    moduleName: 'Store and retrieve data using literal and variable values in C#',
-                    expectedBadgeTitle: 'Store and retrieve data using literal and variable values in C#'
+                    moduleName: 'Analyze text with Azure Language in Foundry Tools',
+                    expectedBadgeTitle: 'Analyze text with Azure Language in Foundry Tools',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/?wt.mc_id=studentamb_496702'
                 }
             ]
         });

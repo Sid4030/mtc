@@ -8,6 +8,7 @@ const projectSubmissionSchema = new mongoose.Schema({
   status: { type: String, enum: ['PENDING', 'APPROVED', 'REJECTED'], default: 'PENDING' },
   marks: { type: Number, default: null }, // Assigned by admin during grading
   feedback: { type: String, default: null }, // Feedback from admin
+  badgeUrl: { type: String, default: null }, // URL to the generated badge
   submittedAt: { type: Date, default: Date.now }
 });
 

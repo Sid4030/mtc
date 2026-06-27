@@ -568,8 +568,8 @@ const BootcampInfo = () => {
                                         color: '#1d1c1c', 
                                         display: 'block', 
                                         fontSize: '1.1rem',
-                                        filter: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
-                                        userSelect: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'none' : 'auto'
+                                        filter: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
+                                        userSelect: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'none' : 'auto'
                                       }}>
                                         {mod.moduleName}
                                       </strong>
@@ -617,14 +617,14 @@ const BootcampInfo = () => {
                                       ) : (
                                           <button 
                                             onClick={() => { setActiveModule(mod); setIsVerifyModalOpen(true); }} 
-                                            disabled={expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆'}
+                                            disabled={expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆'}
                                             style={{ 
-                                              background: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
-                                              color: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
+                                              background: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
+                                              color: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
                                               padding: '8px 16px', 
                                               borderRadius: '6px', 
                                               border: 'none', 
-                                              cursor: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
+                                              cursor: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
                                               fontWeight: 'bold' 
                                             }}
                                           >
@@ -639,7 +639,7 @@ const BootcampInfo = () => {
                               <div style={{ marginTop: '20px', borderTop: '2px dashed #ccc', paddingTop: '20px' }}>
                                 <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '10px' }}>Final Project</h4>
                                 <p style={{ color: '#444', marginBottom: '15px' }}>Complete all modules to unlock the final project submission.</p>
-                                {expandedCard.num === '🏆' ? (
+                                {expandedCard.num === '2' || expandedCard.num === 2 || expandedCard.num === '🏆' ? (
                                   <button 
                                     onClick={() => setIsProjectModalOpen(true)}
                                     className="mythical-hero-btn"
@@ -684,6 +684,13 @@ const BootcampInfo = () => {
                     <a href="https://stdntpartners-my.sharepoint.com/:v:/g/personal/abhishek_agrawal_studentambassadors_com/IQB7k6zL8l98QLhb0SY4r9h6AYYHQhH3cbl_rVkSgzsn-GA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=Pv892S" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
                       <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #d83b01, #a32a00)' }}>
                         🎥 Session Recording
+                      </button>
+                    </a>
+                  ) : expandedCard.num === '2' || expandedCard.num === 2 ? (
+                    <a href="https://teams.microsoft.com/meet/29680042188940?p=PrKkW583KmnG7eJDDN" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #464eb8, #3b429e)' }}>
+                        <i className="fa-brands fa-microsoft" style={{ marginRight: '8px' }}></i>
+                        Join Microsoft Teams
                       </button>
                     </a>
                   ) : (

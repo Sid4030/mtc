@@ -3,6 +3,8 @@ import Participant from '../models/Participant.js';
 import Progress from '../models/Progress.js';
 import ProjectSubmission from '../models/ProjectSubmission.js';
 import Session from '../models/Session.js';
+import Registration from '../models/Registration.js';
+import { sendBadgeEmail } from '../utils/email.js';
 
 const router = express.Router();
 
@@ -128,10 +130,66 @@ router.post('/grade', async (req, res) => {
     submission.marks = marks;
     submission.feedback = feedback || null;
     submission.status = 'APPROVED';
+
+    // Issue Badge via External API if grading is successful and API details are provided
+    if (process.env.BADGE_API_URL && process.env.BADGE_API_TOKEN) {
+      try {
+        const caseInsensitiveEmail = new RegExp(`^${email}$`, 'i');
+        let userRegistration = await Registration.findOne({ email: caseInsensitiveEmail });
+        if (!userRegistration) {
+          userRegistration = await Participant.findOne({ email: caseInsensitiveEmail });
+        }
+        const fullName = userRegistration && userRegistration.name ? userRegistration.name : email.split('@')[0];
+
+        // Parse numeric session ID (e.g., 'session_1' -> 1)
+        const match = sessionId.match(/\d+/);
+        const numericSessionId = match ? parseInt(match[0], 10) : 1;
+
+        // Use a timestamp-based badge number to guarantee 100% uniqueness and avoid 409 conflicts
+        const badgeNumber = `MTC-SOAI-AZURE-${Date.now()}`;
+
+        const payload = {
+          "holder_full_name": fullName,
+          "holder_email": email,
+          "badge_number": badgeNumber,
+          "badge_definition_id": numericSessionId,
+          "authorised_by": "Microsoft Tech Community",
+          "added_by": "API"
+        };
+
+        const badgeResponse = await fetch(process.env.BADGE_API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.BADGE_API_TOKEN}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const badgeData = await badgeResponse.json();
+
+        if (badgeData.success && badgeData.badge && badgeData.badge.badge_url) {
+          // Construct full URL if returned URL is a relative path
+          const baseUrl = process.env.BADGE_PORTAL_BASE_URL || '';
+          submission.badgeUrl = badgeData.badge.badge_url.startsWith('http') 
+            ? badgeData.badge.badge_url 
+            : `${baseUrl}${badgeData.badge.badge_url}`;
+            
+          // Fire email asynchronously (fire and forget)
+          sendBadgeEmail(email, fullName, numericSessionId, submission.badgeUrl);
+        } else {
+          console.error("Badge API failed or returned unexpected format:", badgeData);
+        }
+      } catch (apiError) {
+        console.error("Error issuing badge via API:", apiError);
+      }
+    }
+
     await submission.save();
 
     res.json({ message: "Marks uploaded successfully", submission });
   } catch (error) {
+    console.error("Grade Error:", error);
     res.status(500).json({ error: error.message });
   }
 });
