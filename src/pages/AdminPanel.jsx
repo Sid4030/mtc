@@ -108,10 +108,10 @@ const AdminPanel = () => {
     if (token) {
       gsap.fromTo(".admin-fade-in", 
         { opacity: 0, y: 20 }, 
-        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.05 }
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
       );
     }
-  }, [token, registrations, leaderboard, participantsGrid, activeTab]);
+  }, [activeTab]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -469,7 +469,7 @@ const AdminPanel = () => {
               </div>
             ) : (
               filteredRegistrations.map((reg) => (
-                <div key={reg._id} className="admin-fade-in group relative bg-white/[0.03] rounded-2xl border border-white/[0.05] p-6 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 overflow-hidden">
+                <div key={reg._id} className="group relative bg-white/[0.03] rounded-2xl border border-white/[0.05] p-6 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 overflow-hidden">
                   
                   {/* Hover Glow Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -554,7 +554,7 @@ const AdminPanel = () => {
 
         {/* --- LEADERBOARD VIEW --- */}
         {activeTab === 'Leaderboard' && (
-          <div className="bg-white/[0.03] border border-white/[0.05] rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl">
+          <div className="bg-white/[0.03] border border-white/[0.05] rounded-3xl overflow-hidden shadow-2xl">
             {loading ? (
               <div className="text-center py-20"><div className="w-10 h-10 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto"></div></div>
             ) : leaderboard.length === 0 ? (
@@ -573,7 +573,7 @@ const AdminPanel = () => {
                   </thead>
                   <tbody className="divide-y divide-white/[0.02]">
                     {leaderboard.map((user, idx) => (
-                      <tr key={user.email} className="group hover:bg-white/[0.02] transition-colors duration-300 admin-fade-in">
+                      <tr key={user.email} className="group hover:bg-white/[0.02] transition-colors duration-300">
                         <td className="p-4">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg ${
                             idx === 0 ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
@@ -617,7 +617,7 @@ const AdminPanel = () => {
 
         {/* --- EVALUATION VIEW --- */}
         {activeTab === 'Evaluation' && (
-          <div className="bg-white/[0.03] border border-white/[0.05] rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl">
+          <div className="bg-white/[0.03] border border-white/[0.05] rounded-3xl overflow-hidden shadow-2xl">
             {loading ? (
               <div className="text-center py-20"><div className="w-10 h-10 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto"></div></div>
             ) : participantsGrid.length === 0 ? (
@@ -627,7 +627,7 @@ const AdminPanel = () => {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="p-4 font-bold text-white/40 text-xs uppercase tracking-wider whitespace-nowrap sticky left-0 bg-[#0c0c0e]/80 backdrop-blur-md z-20">Participant</th>
+                      <th className="p-4 font-bold text-white/40 text-xs uppercase tracking-wider whitespace-nowrap sticky left-0 bg-[#0c0c0e] z-20">Participant</th>
                       {[1,2,3,4,5,6,7,8].map(s => (
                         <th key={s} className="p-4 font-bold text-white/40 text-xs uppercase tracking-wider text-center">S{s}</th>
                       ))}
@@ -636,8 +636,8 @@ const AdminPanel = () => {
                   </thead>
                   <tbody className="divide-y divide-white/[0.02]">
                     {participantsGrid.map((user) => (
-                      <tr key={user.email} className="group hover:bg-white/[0.02] transition-colors duration-300 admin-fade-in">
-                        <td className="p-4 sticky left-0 bg-[#0c0c0e]/80 backdrop-blur-md group-hover:bg-[#141416]/80 z-10 transition-colors border-r border-white/5">
+                      <tr key={user.email} className="group hover:bg-white/[0.02] transition-colors duration-300">
+                        <td className="p-4 sticky left-0 bg-[#0c0c0e] group-hover:bg-[#141416] z-10 transition-colors border-r border-white/5">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-white/10 flex items-center justify-center text-white/80 font-bold text-xs">
                               {user.name.charAt(0).toUpperCase()}

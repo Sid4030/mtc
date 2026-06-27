@@ -568,8 +568,8 @@ const BootcampInfo = () => {
                                         color: '#1d1c1c', 
                                         display: 'block', 
                                         fontSize: '1.1rem',
-                                        filter: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
-                                        userSelect: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'none' : 'auto'
+                                        filter: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
+                                        userSelect: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'none' : 'auto'
                                       }}>
                                         {mod.moduleName}
                                       </strong>
@@ -617,14 +617,14 @@ const BootcampInfo = () => {
                                       ) : (
                                           <button 
                                             onClick={() => { setActiveModule(mod); setIsVerifyModalOpen(true); }} 
-                                            disabled={expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆'}
+                                            disabled={expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆'}
                                             style={{ 
-                                              background: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
-                                              color: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
+                                              background: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
+                                              color: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
                                               padding: '8px 16px', 
                                               borderRadius: '6px', 
                                               border: 'none', 
-                                              cursor: (expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
+                                              cursor: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
                                               fontWeight: 'bold' 
                                             }}
                                           >
@@ -639,7 +639,7 @@ const BootcampInfo = () => {
                               <div style={{ marginTop: '20px', borderTop: '2px dashed #ccc', paddingTop: '20px' }}>
                                 <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '10px' }}>Final Project</h4>
                                 <p style={{ color: '#444', marginBottom: '15px' }}>Complete all modules to unlock the final project submission.</p>
-                                {expandedCard.num === '2' || expandedCard.num === 2 || expandedCard.num === '🏆' ? (
+                                {expandedCard.num === '1' || expandedCard.num === 1 || expandedCard.num === '🏆' ? (
                                   <button 
                                     onClick={() => setIsProjectModalOpen(true)}
                                     className="mythical-hero-btn"

@@ -175,6 +175,9 @@ router.post('/grade', async (req, res) => {
             ? badgeData.badge.badge_url 
             : `${baseUrl}${badgeData.badge.badge_url}`;
             
+          // Save the generated badge URL to the database
+          await submission.save();
+
           // Fire email asynchronously (fire and forget)
           sendBadgeEmail(email, fullName, numericSessionId, submission.badgeUrl);
         } else {
