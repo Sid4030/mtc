@@ -52,7 +52,20 @@ router.post('/submit-badge', async (req, res) => {
     const foundTitle = verification.title.toLowerCase().replace(/[^a-z0-9]/g, '');
     const expectedTitle = module.expectedBadgeTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
     
-    if (!foundTitle.includes(expectedTitle) && !expectedTitle.includes(foundTitle)) {
+    // Alias check for known MS Learn name variations
+    const aliases = {
+      'introductiontoaiconcepts': ['fundamentalaiconcepts']
+    };
+
+    let isMatch = foundTitle.includes(expectedTitle) || expectedTitle.includes(foundTitle);
+    
+    if (!isMatch && aliases[expectedTitle]) {
+      isMatch = aliases[expectedTitle].some(alias => 
+        foundTitle.includes(alias) || alias.includes(foundTitle)
+      );
+    }
+
+    if (!isMatch) {
       return res.status(400).json({ 
         error: `Badge title does not match. Expected "${module.expectedBadgeTitle}", but got "${verification.title}".`
       });

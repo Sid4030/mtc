@@ -639,7 +639,7 @@ const BootcampInfo = () => {
                               <div style={{ marginTop: '20px', borderTop: '2px dashed #ccc', paddingTop: '20px' }}>
                                 <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '10px' }}>Final Project</h4>
                                 <p style={{ color: '#444', marginBottom: '15px' }}>Complete all modules to unlock the final project submission.</p>
-                                {expandedCard.num === '1' || expandedCard.num === 1 || expandedCard.num === '🏆' ? (
+                                {expandedCard.num === '🏆' ? (
                                   <button 
                                     onClick={() => setIsProjectModalOpen(true)}
                                     className="mythical-hero-btn"

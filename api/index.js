@@ -127,11 +127,11 @@ const generateTicketHTML = (name) => `
         We are excited to welcome you to Season of AI 2.0 – Azure Edition, an 8-session hands-on bootcamp focused on Azure AI and cloud technologies.
       </p>
 
-      <!-- Session 1 Details -->
+      <!-- Session Details -->
       <div style="background-color: #161b22; border-radius: 12px; padding: 15px; margin-bottom: 24px; border: 1px solid #30363d; text-align: left;">
-        <h3 style="color: #ffffff; font-size: 18px; margin: 0 0 12px 0; border-bottom: 1px solid #30363d; padding-bottom: 10px;">Session 1 Details</h3>
+        <h3 style="color: #ffffff; font-size: 18px; margin: 0 0 12px 0; border-bottom: 1px solid #30363d; padding-bottom: 10px;">Session 2 Details</h3>
         <ul style="color: #d1d5db; font-size: 15px; margin: 0; padding-left: 20px; line-height: 1.6; padding-top: 10px;">
-          <li style="margin-bottom: 5px;"><strong>Date:</strong> 25 June 2026</li>
+          <li style="margin-bottom: 5px;"><strong>Date:</strong> 27 June 2026</li>
           <li><strong>Time:</strong> 7:00 PM IST – 8:30 PM IST (Approx.)</li>
         </ul>
         <p style="color: #8b949e; font-size: 14px; margin: 15px 0 0 0; font-style: italic; background-color: rgba(255,255,255,0.02); padding: 10px; border-left: 3px solid #58a6ff; border-radius: 0 4px 4px 0;">
@@ -146,7 +146,7 @@ const generateTicketHTML = (name) => `
         <table width="100%" cellpadding="0" cellspacing="0" style="margin: 0 auto; max-width: 320px;">
           <tr>
             <td style="padding-bottom: 12px;">
-              <a href="https://teams.microsoft.com/meet/24122598981924?p=lk3mZe3WOksrcTk58F" style="display: block; background-color: #5b5fc7; color: #ffffff; font-size: 15px; font-weight: bold; text-decoration: none; padding: 16px 15px; border-radius: 50px; border: 1px solid #4a4d9e; box-shadow: 0 4px 15px rgba(91,95,199,0.3); text-align: center; white-space: nowrap;">
+              <a href="https://teams.microsoft.com/meet/29680042188940?p=PrKkW583KmnG7eJDDN" style="display: block; background-color: #5b5fc7; color: #ffffff; font-size: 15px; font-weight: bold; text-decoration: none; padding: 16px 15px; border-radius: 50px; border: 1px solid #4a4d9e; box-shadow: 0 4px 15px rgba(91,95,199,0.3); text-align: center; white-space: nowrap;">
                 <span style="font-size: 16px; margin-right: 6px;">📹</span> Microsoft Teams
               </a>
             </td>
@@ -196,7 +196,7 @@ const generateTicketHTML = (name) => `
       </div>
 
       <p style="font-size: 15px; line-height: 1.6; color: #d1d5db; margin: 0 0 30px 0; text-align: left;">
-        We look forward to seeing you on 25 June.<br><br>
+        We look forward to seeing you on 27 June.<br><br>
         Regards,<br>
         <strong style="color: #ffffff;">Season of AI 2.0 – Azure Edition Team</strong><br>
         Microsoft Tech Community
