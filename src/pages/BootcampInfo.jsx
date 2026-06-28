@@ -568,8 +568,8 @@ const BootcampInfo = () => {
                                         color: '#1d1c1c', 
                                         display: 'block', 
                                         fontSize: '1.1rem',
-                                        filter: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
-                                        userSelect: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'none' : 'auto'
+                                        filter: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
+                                        userSelect: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'none' : 'auto'
                                       }}>
                                         {mod.moduleName}
                                       </strong>
@@ -617,14 +617,14 @@ const BootcampInfo = () => {
                                       ) : (
                                           <button 
                                             onClick={() => { setActiveModule(mod); setIsVerifyModalOpen(true); }} 
-                                            disabled={expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆'}
+                                            disabled={expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆'}
                                             style={{ 
-                                              background: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
-                                              color: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
+                                              background: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
+                                              color: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
                                               padding: '8px 16px', 
                                               borderRadius: '6px', 
                                               border: 'none', 
-                                              cursor: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '2' && expandedCard.num !== 2 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
+                                              cursor: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
                                               fontWeight: 'bold' 
                                             }}
                                           >
