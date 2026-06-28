@@ -639,7 +639,7 @@ const BootcampInfo = () => {
                               <div style={{ marginTop: '20px', borderTop: '2px dashed #ccc', paddingTop: '20px' }}>
                                 <h4 style={{ fontSize: '1.4rem', color: '#1d1c1c', fontWeight: 800, marginBottom: '10px' }}>Final Project</h4>
                                 <p style={{ color: '#444', marginBottom: '15px' }}>Complete all modules to unlock the final project submission.</p>
-                                {expandedCard.num === '1' || expandedCard.num === 1 || expandedCard.num === '🏆' ? (
+                                {expandedCard.num === '1' || expandedCard.num === 1 || expandedCard.num === '3' || expandedCard.num === 3 || expandedCard.num === '🏆' ? (
                                   <button 
                                     onClick={() => setIsProjectModalOpen(true)}
                                     className="mythical-hero-btn"
@@ -694,10 +694,9 @@ const BootcampInfo = () => {
                       </button>
                     </a>
                   ) : expandedCard.num === '3' || expandedCard.num === 3 ? (
-                    <a href="https://teams.microsoft.com/meet/220452979496424?p=HyaAAsmBext23WlIq1" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #464eb8, #3b429e)' }}>
-                        <i className="fa-brands fa-microsoft" style={{ marginRight: '8px' }}></i>
-                        Join Microsoft Teams
+                    <a href="https://stdntpartners-my.sharepoint.com/:v:/g/personal/abhishek_agrawal_studentambassadors_com/IQDtqFLVveBlQIOF7SIDftbbATk76HPOcRFJM3RNjsisG7E?e=KemO46&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #d83b01, #a32a00)' }}>
+                        🎥 Session Recording
                       </button>
                     </a>
                   ) : (
