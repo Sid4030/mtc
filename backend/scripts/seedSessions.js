@@ -62,8 +62,34 @@ const seedSessions = async () => {
             ]
         });
 
-        // Placeholder for 3 to 7
-        for (let i = 3; i <= 7; i++) {
+        // Session 3
+        sessionsData.push({
+            sessionId: 'session_3',
+            sessionName: 'Session 3',
+            modules: [
+                {
+                    moduleId: 's3_m1',
+                    moduleName: 'Get started with computer vision in Azure',
+                    expectedBadgeTitle: 'Get started with computer vision in Azure',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/get-started-vision-azure/?wt.mc_id=studentamb_496702'
+                },
+                {
+                    moduleId: 's3_m2',
+                    moduleName: 'Introduction to computer vision concepts',
+                    expectedBadgeTitle: 'Introduction to computer vision concepts',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/introduction-computer-vision/?wt.mc_id=studentamb_496702'
+                },
+                {
+                    moduleId: 's3_m3',
+                    moduleName: 'Introduction to Microsoft Foundry on Windows',
+                    expectedBadgeTitle: 'Introduction to Microsoft Foundry on Windows',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/introduction-microsoft-foundry-windows/?wt.mc_id=studentamb_496702'
+                }
+            ]
+        });
+
+        // Placeholder for 4 to 7
+        for (let i = 4; i <= 7; i++) {
             sessionsData.push({
                 sessionId: `session_${i}`,
                 sessionName: `Session ${i}`,

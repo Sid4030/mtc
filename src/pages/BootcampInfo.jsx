@@ -568,8 +568,8 @@ const BootcampInfo = () => {
                                         color: '#1d1c1c', 
                                         display: 'block', 
                                         fontSize: '1.1rem',
-                                        filter: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
-                                        userSelect: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'none' : 'auto'
+                                        filter: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '3' && expandedCard.num !== 3 && expandedCard.num !== '🏆') ? 'blur(5px)' : 'none',
+                                        userSelect: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '3' && expandedCard.num !== 3 && expandedCard.num !== '🏆') ? 'none' : 'auto'
                                       }}>
                                         {mod.moduleName}
                                       </strong>
@@ -617,14 +617,14 @@ const BootcampInfo = () => {
                                       ) : (
                                           <button 
                                             onClick={() => { setActiveModule(mod); setIsVerifyModalOpen(true); }} 
-                                            disabled={expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆'}
+                                            disabled={expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '3' && expandedCard.num !== 3 && expandedCard.num !== '🏆'}
                                             style={{ 
-                                              background: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
-                                              color: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
+                                              background: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '3' && expandedCard.num !== 3 && expandedCard.num !== '🏆') ? '#ccc' : '#1d1c1c', 
+                                              color: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '3' && expandedCard.num !== 3 && expandedCard.num !== '🏆') ? '#666' : '#fff', 
                                               padding: '8px 16px', 
                                               borderRadius: '6px', 
                                               border: 'none', 
-                                              cursor: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
+                                              cursor: (expandedCard.num !== '1' && expandedCard.num !== 1 && expandedCard.num !== '3' && expandedCard.num !== 3 && expandedCard.num !== '🏆') ? 'not-allowed' : 'pointer', 
                                               fontWeight: 'bold' 
                                             }}
                                           >
@@ -688,6 +688,13 @@ const BootcampInfo = () => {
                     </a>
                   ) : expandedCard.num === '2' || expandedCard.num === 2 ? (
                     <a href="https://teams.microsoft.com/meet/29680042188940?p=PrKkW583KmnG7eJDDN" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #464eb8, #3b429e)' }}>
+                        <i className="fa-brands fa-microsoft" style={{ marginRight: '8px' }}></i>
+                        Join Microsoft Teams
+                      </button>
+                    </a>
+                  ) : expandedCard.num === '3' || expandedCard.num === 3 ? (
+                    <a href="https://teams.microsoft.com/meet/220452979496424?p=HyaAAsmBext23WlIq1" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
                       <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #464eb8, #3b429e)' }}>
                         <i className="fa-brands fa-microsoft" style={{ marginRight: '8px' }}></i>
                         Join Microsoft Teams
