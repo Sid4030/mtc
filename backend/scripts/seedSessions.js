@@ -88,8 +88,34 @@ const seedSessions = async () => {
             ]
         });
 
-        // Placeholder for 4 to 7
-        for (let i = 4; i <= 7; i++) {
+        // Session 4
+        sessionsData.push({
+            sessionId: 'session_4',
+            sessionName: 'Session 4',
+            modules: [
+                {
+                    moduleId: 's4_m1',
+                    moduleName: 'Create speech-enabled apps with Azure Speech in Microsoft Foundry Tools',
+                    expectedBadgeTitle: 'Create speech-enabled apps with Azure Speech in Microsoft Foundry Tools',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/create-speech-enabled-apps/?wt.mc_id=studentamb_458088'
+                },
+                {
+                    moduleId: 's4_m2',
+                    moduleName: 'Develop an Azure Speech Voice Live Agent in Microsoft Foundry.',
+                    expectedBadgeTitle: 'Develop an Azure Speech Voice Live Agent in Microsoft Foundry.',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/develop-voice-live-agent/?wt.mc_id=studentamb_458088'
+                },
+                {
+                    moduleId: 's4_m3',
+                    moduleName: 'Translate text and speech with Microsoft Foundry Tools.',
+                    expectedBadgeTitle: 'Translate text and speech with Microsoft Foundry Tools.',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/translate-text-speech/?wt.mc_id=studentamb_458088'
+                }
+            ]
+        });
+
+        // Placeholder for 5 to 7
+        for (let i = 5; i <= 7; i++) {
             sessionsData.push({
                 sessionId: `session_${i}`,
                 sessionName: `Session ${i}`,
