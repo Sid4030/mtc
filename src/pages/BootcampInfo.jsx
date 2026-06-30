@@ -687,10 +687,9 @@ const BootcampInfo = () => {
                       </button>
                     </a>
                   ) : expandedCard.num === '2' || expandedCard.num === 2 ? (
-                    <a href="https://teams.microsoft.com/meet/214481027429309?p=JytsW0IGDsVUJby1D4" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #464eb8, #3b429e)' }}>
-                        <i className="fa-brands fa-microsoft" style={{ marginRight: '8px' }}></i>
-                        Join Microsoft Teams
+                    <a href="https://stdntpartners-my.sharepoint.com/:v:/g/personal/abhishek_agrawal_studentambassadors_com/IQAtLOrrSUrSQKmdV8_-3r1bAW_8tdVe5vUSQuPkbF5w9pg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=Gsd99I" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #d83b01, #a32a00)' }}>
+                        🎥 Session Recording
                       </button>
                     </a>
                   ) : expandedCard.num === '3' || expandedCard.num === 3 ? (
