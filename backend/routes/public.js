@@ -36,10 +36,21 @@ router.get('/leaderboard', async (req, res) => {
       const verifiedCount = userProgress.length;
       const completedCount = userSubmissions.length;
 
+      const sessionMarks = {};
+      for (let i = 1; i <= 8; i++) {
+        const sId = `session_${i}`;
+        const sProgress = userProgress.filter(pr => pr.sessionId === sId);
+        const sSub = userSubmissions.find(sub => sub.sessionId === sId);
+        const sModuleMarks = sProgress.length * 5;
+        const sProjectMarks = sSub && sSub.marks !== null ? sSub.marks : 0;
+        sessionMarks[sId] = sModuleMarks + sProjectMarks;
+      }
+
       return {
         email: p.email,
         name: p.name,
         totalMarks,
+        sessionMarks,
         verifiedCount,
         completedCount
       };

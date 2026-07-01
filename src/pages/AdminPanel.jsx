@@ -46,6 +46,7 @@ const AdminPanel = () => {
   const [error, setError] = useState('');
   const [filterType, setFilterType] = useState('All');
   const [activeTab, setActiveTab] = useState('Registrations'); // Registrations | Leaderboard | Evaluation
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Grading Modal States
   const [gradingModalOpen, setGradingModalOpen] = useState(false);
@@ -235,6 +236,12 @@ const AdminPanel = () => {
     return true;
   });
 
+  const filteredParticipants = participantsGrid.filter(user => {
+    if (!searchQuery) return true;
+    const lowerQuery = searchQuery.toLowerCase();
+    return user.name.toLowerCase().includes(lowerQuery) || user.email.toLowerCase().includes(lowerQuery);
+  });
+
   const exportToCSV = () => {
     if (activeTab === 'Registrations' && filteredRegistrations.length === 0) return;
     
@@ -261,8 +268,20 @@ const AdminPanel = () => {
       ]);
       csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
       filename = `bootcamp_leaderboard_${new Date().toISOString().split('T')[0]}.csv`;
+    } else if (activeTab === 'Evaluation') {
+      const headers = ['Name', 'Email', ...[1,2,3,4,5,6,7,8].map(s => `Session ${s} Link`)];
+      const rows = filteredParticipants.map(user => [
+        `"${user.name}"`, 
+        `"${user.email}"`, 
+        ...[1,2,3,4,5,6,7,8].map(s => {
+          const sData = user.sessions[`session_${s}`];
+          return sData && sData.pdfUrl ? `"${sData.pdfUrl}"` : '""';
+        })
+      ]);
+      csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+      filename = `bootcamp_evaluation_${new Date().toISOString().split('T')[0]}.csv`;
     } else {
-      return; // Export not supported for Evaluation yet
+      return; 
     }
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -442,7 +461,17 @@ const AdminPanel = () => {
               </select>
             )}
 
-            {(activeTab === 'Registrations' || activeTab === 'Leaderboard') && (
+            {activeTab === 'Evaluation' && (
+              <input
+                type="text"
+                placeholder="Search by name or email..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-[#050505] border border-white/20 text-white text-sm rounded-xl px-4 py-2 focus:outline-none focus:border-blue-500 transition-all font-medium w-full sm:w-auto placeholder:text-white/30"
+              />
+            )}
+
+            {(activeTab === 'Registrations' || activeTab === 'Leaderboard' || activeTab === 'Evaluation') && (
               <button 
                 onClick={exportToCSV} 
                 className="flex items-center justify-center gap-2 text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2 rounded-xl transition-all w-full sm:w-auto"
@@ -635,7 +664,7 @@ const AdminPanel = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.02]">
-                    {participantsGrid.map((user) => (
+                    {filteredParticipants.map((user) => (
                       <tr key={user.email} className="group hover:bg-white/[0.02] transition-colors duration-300">
                         <td className="p-4 sticky left-0 bg-[#0c0c0e] group-hover:bg-[#141416] z-10 transition-colors border-r border-white/5">
                           <div className="flex items-center gap-3">

@@ -140,16 +140,20 @@
 
 /* Columns */
 .col-rank { width: 60px; text-align: center; display: flex; justify-content: center; align-items: center; }
-.col-name { flex: 1; display: flex; align-items: center; gap: 1rem; padding-left: 1rem; }
-.col-score { width: 100px; text-align: right; display: flex; justify-content: flex-end; align-items: center; }
+.col-name { flex: 1; display: flex; align-items: center; gap: 1rem; padding-left: 1rem; min-width: 150px; }
+.col-session { width: 45px; text-align: center; display: flex; justify-content: center; align-items: center; color: #888; font-size: 0.8rem; font-weight: 500; }
+.col-score { width: 80px; text-align: right; display: flex; justify-content: flex-end; align-items: center; }
 
 /* Scrollable Area */
 .scoreboard-scroll-area {
   flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.scoreboard-table-header, .scoreboard-row {
+  min-width: 800px;
 }
 
 .scoreboard-scroll-area::-webkit-scrollbar { width: 6px; }
@@ -290,8 +294,8 @@
   }
   
   .col-rank { width: 40px; }
-  .col-score { width: 80px; }
-  .col-name { padding-left: 0.5rem; }
+  .col-score { width: 60px; }
+  .col-name { padding-left: 0.5rem; min-width: 120px; }
   
   .player-name {
     font-size: 0.9rem;

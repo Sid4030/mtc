@@ -90,7 +90,15 @@ const Leaderboard = () => {
               <div className="scoreboard-table-header">
                 <div className="col-rank">RANK</div>
                 <div className="col-name">PARTICIPANT</div>
-                <div className="col-score">SCORE</div>
+                <div className="col-session">S1</div>
+                <div className="col-session">S2</div>
+                <div className="col-session">S3</div>
+                <div className="col-session">S4</div>
+                <div className="col-session">S5</div>
+                <div className="col-session">S6</div>
+                <div className="col-session">S7</div>
+                <div className="col-session">S8</div>
+                <div className="col-score">TOTAL</div>
               </div>
               
               <div className="scoreboard-scroll-area">
@@ -110,6 +118,11 @@ const Leaderboard = () => {
                         <div className="avatar">{player.name.charAt(0).toUpperCase()}</div>
                         <span className="player-name">{player.name}</span>
                       </div>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map(s => (
+                        <div key={s} className="col-session">
+                          {player.sessionMarks ? player.sessionMarks[`session_${s}`] : '-'}
+                        </div>
+                      ))}
                       <div className="col-score">
                         <span key={player.totalMarks} className="score-val slot-spin">{player.totalMarks}</span>
                         <span className="score-pts">PTS</span>

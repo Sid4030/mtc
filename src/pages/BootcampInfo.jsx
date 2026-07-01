@@ -699,9 +699,9 @@ const BootcampInfo = () => {
                       </button>
                     </a>
                   ) : expandedCard.num === '4' || expandedCard.num === 4 ? (
-                    <a href="https://teams.microsoft.com/meet/2175882559256?p=0nSmBwH2qPyhJslvDm" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #464eb8, #5b5fc7)' }}>
-                        📞 Join Teams Meeting
+                    <a href="https://stdntpartners-my.sharepoint.com/:v:/g/personal/abhishek_agrawal_studentambassadors_com/IQCgsy48NT-6Ra0LYmIG6LasAS539Ao8WLb7mTLk1PUm8gE?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=FtFbdx" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                      <button className="mythical-hero-btn" style={{ padding: '16px 32px', width: '100%', fontSize: '1.2rem', border: 'none', cursor: 'pointer', color: '#ffffff', background: 'linear-gradient(135deg, #d83b01, #a32a00)' }}>
+                        🎥 Session Recording
                       </button>
                     </a>
                   ) : (
