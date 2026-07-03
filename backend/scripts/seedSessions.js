@@ -114,8 +114,34 @@ const seedSessions = async () => {
             ]
         });
 
-        // Placeholder for 5 to 7
-        for (let i = 5; i <= 7; i++) {
+        // Session 5
+        sessionsData.push({
+            sessionId: 'session_5',
+            sessionName: 'Session 5',
+            modules: [
+                {
+                    moduleId: 's5_m1',
+                    moduleName: 'Utilize an Azure OpenAI model to create an Agent',
+                    expectedBadgeTitle: 'Utilize an Azure OpenAI model to create an Agent',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/utilize-azure-openai-model-create-app/?wt.mc_id=studentamb_458088'
+                },
+                {
+                    moduleId: 's5_m2',
+                    moduleName: 'Secure authentication and authorization for Azure OpenAI in Microsoft Foundry',
+                    expectedBadgeTitle: 'Secure authentication and authorization for Azure OpenAI in Microsoft Foundry',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/secure-azure-openai-authentication-authorization/?wt.mc_id=studentamb_458088'
+                },
+                {
+                    moduleId: 's5_m3',
+                    moduleName: 'Explore identity in Microsoft Entra ID',
+                    expectedBadgeTitle: 'Explore identity in Microsoft Entra ID.',
+                    moduleUrl: 'https://learn.microsoft.com/en-us/training/modules/explore-identity-azure-active-directory/?wt.mc_id=studentamb_458088'
+                }
+            ]
+        });
+
+        // Placeholder for 6 to 7
+        for (let i = 6; i <= 7; i++) {
             sessionsData.push({
                 sessionId: `session_${i}`,
                 sessionName: `Session ${i}`,
