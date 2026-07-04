@@ -146,7 +146,7 @@ const generateTicketHTML = (name) => `
         <table width="100%" cellpadding="0" cellspacing="0" style="margin: 0 auto; max-width: 320px;">
           <tr>
             <td style="padding-bottom: 12px;">
-              <a href="https://teams.microsoft.com/meet/2175882559256?p=0nSmBwH2qPyhJslvDm" style="display: block; background-color: #5b5fc7; color: #ffffff; font-size: 15px; font-weight: bold; text-decoration: none; padding: 16px 15px; border-radius: 50px; border: 1px solid #4a4d9e; box-shadow: 0 4px 15px rgba(91,95,199,0.3); text-align: center; white-space: nowrap;">
+              <a href="https://teams.microsoft.com/meet/266189514258337?p=lkYdL3lthC5PtNsOju" style="display: block; background-color: #5b5fc7; color: #ffffff; font-size: 15px; font-weight: bold; text-decoration: none; padding: 16px 15px; border-radius: 50px; border: 1px solid #4a4d9e; box-shadow: 0 4px 15px rgba(91,95,199,0.3); text-align: center; white-space: nowrap;">
                 <span style="font-size: 16px; margin-right: 6px;">📹</span> Microsoft Teams
               </a>
             </td>

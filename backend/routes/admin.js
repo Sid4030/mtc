@@ -175,9 +175,6 @@ router.post('/grade', async (req, res) => {
             ? badgeData.badge.badge_url 
             : `${baseUrl}${badgeData.badge.badge_url}`;
             
-          // Save the generated badge URL to the database
-          await submission.save();
-
           // Fire email asynchronously (fire and forget)
           sendBadgeEmail(email, fullName, numericSessionId, submission.badgeUrl);
         } else {
@@ -188,11 +185,12 @@ router.post('/grade', async (req, res) => {
       }
     }
 
+    // Save the submission once at the end
     await submission.save();
 
     res.json({ message: "Marks uploaded successfully", submission });
   } catch (error) {
-    console.error("Grade Error:", error);
+    console.error("Grade Error:", error.stack || error);
     res.status(500).json({ error: error.message });
   }
 });
