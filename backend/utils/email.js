@@ -96,8 +96,8 @@ export const sendBadgeEmail = async (email, name, sessionNumber, badgeUrl) => {
       html: htmlContent,
       attachments: [
         {
-          filename: sessionNumber === 2 ? 'badge1.png' : 'badge.png',
-          path: path.join(process.cwd(), sessionNumber === 2 ? 'badge1.png' : 'badge.png'),
+          filename: sessionNumber === 1 ? 'badge.png' : `badge${sessionNumber - 1}.png`,
+          path: path.join(process.cwd(), sessionNumber === 1 ? 'badge.png' : `badge${sessionNumber - 1}.png`),
           cid: 'badge_image'
         }
       ]
