@@ -90,6 +90,15 @@ app.get('/', (req, res) => {
 });
 
 // API Routes
+app.use('/api', async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    console.error('Database connection failed in middleware:', error);
+    res.status(500).json({ error: 'Database connection failed' });
+  }
+});
 app.use('/api/badges', badgesRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/public', publicRouter);
