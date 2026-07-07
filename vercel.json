@@ -6,8 +6,16 @@
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/(badges|projects|public|admin|register|send-welcome-emails)(/.*)?",
       "destination": "/api"
+    },
+    {
+      "source": "/api(/)?",
+      "destination": "/api"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/404"
     },
     {
       "source": "/(.*)",
