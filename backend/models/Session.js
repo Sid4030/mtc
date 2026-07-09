@@ -4,7 +4,7 @@ const moduleSchema = new mongoose.Schema({
   moduleId: { type: String, required: true },
   moduleName: { type: String, required: true },
   expectedBadgeTitle: { type: String, required: true },
-  moduleUrl: { type: String } // Added for redirecting to the MS Learn module
+  moduleUrl: { type: String } 
 });
 
 const sessionSchema = new mongoose.Schema({

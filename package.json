@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@marsidev/react-turnstile": "^1.5.3",
     "@tailwindcss/vite": "^4.2.2",
     "concurrently": "^10.0.3",
     "cors": "^2.8.6",
