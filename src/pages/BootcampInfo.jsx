@@ -59,7 +59,7 @@ const BootcampInfo = () => {
 
   const fetchProgress = async (email, cardNum) => {
     try {
-      const res = await fetch(`/api/badges/progress/${email}/session_${cardNum}`);
+      const res = await fetch(`/api/badges/progress/${encodeURIComponent(email)}/session_${cardNum}`);
       if (res.ok) {
         const data = await res.json();
         const wasIncomplete = userProgress ? !userProgress.allModulesCompleted : true;
@@ -74,7 +74,12 @@ const BootcampInfo = () => {
 
   useEffect(() => {
     if (expandedCard && userEmail && expandedCard.num !== '🏆') {
+      // Clear stale progress from previously viewed session before fetching new data
+      setUserProgress(null);
       fetchProgress(userEmail, expandedCard.num);
+    } else if (!expandedCard) {
+      // Clear progress when no card is open to prevent stale data
+      setUserProgress(null);
     }
   }, [expandedCard, userEmail]);
 
@@ -103,6 +108,7 @@ const BootcampInfo = () => {
       onComplete: () => {
         setExpandedCard(null);
         setCardBounds(null);
+        setUserProgress(null);
       }
     });
     gsap.to(overlayRef.current, {

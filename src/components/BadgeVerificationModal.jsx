@@ -30,6 +30,9 @@ const BadgeVerificationModal = ({ isOpen, onClose, module, session, onVerifySucc
     setLoading(true);
     setError('');
 
+    // Normalize email to prevent case-sensitivity mismatches
+    const normalizedEmail = email.trim().toLowerCase();
+
     try {
       if (mode === 'submit') {
         const res = await fetch('/api/badges/submit-badge', {
@@ -37,7 +40,7 @@ const BadgeVerificationModal = ({ isOpen, onClose, module, session, onVerifySucc
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name,
-            email,
+            email: normalizedEmail,
             sessionId: session.sessionId,
             moduleId: module.moduleId,
             badgeUrl
@@ -47,18 +50,18 @@ const BadgeVerificationModal = ({ isOpen, onClose, module, session, onVerifySucc
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || data.message || 'Failed to verify badge');
 
-        localStorage.setItem('trackerEmail', email);
-        onVerifySuccess(email); // Triggers the parent to refresh progress
+        localStorage.setItem('trackerEmail', normalizedEmail);
+        onVerifySuccess(normalizedEmail); // Triggers the parent to refresh progress
         onClose();
       } else {
         // Restore progress mode
-        const res = await fetch(`/api/badges/progress/${email}/${session.sessionId}`);
+        const res = await fetch(`/api/badges/progress/${encodeURIComponent(normalizedEmail)}/${session.sessionId}`);
         const data = await res.json();
         
         if (!res.ok) throw new Error(data.error || 'Failed to fetch progress');
         
-        localStorage.setItem('trackerEmail', email);
-        onVerifySuccess(email);
+        localStorage.setItem('trackerEmail', normalizedEmail);
+        onVerifySuccess(normalizedEmail);
         onClose();
       }
     } catch (err) {

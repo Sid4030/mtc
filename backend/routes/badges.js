@@ -25,6 +25,9 @@ router.post('/submit-badge', async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // Normalize email to prevent case-sensitivity issues
+    const normalizedEmail = email.trim().toLowerCase();
+
     // 1. Find the session and module to know the expected badge title
     const session = await Session.findOne({ sessionId });
     if (!session) {
@@ -37,7 +40,7 @@ router.post('/submit-badge', async (req, res) => {
     }
 
     // 2. Check if already verified
-    const existingProgress = await Progress.findOne({ email, sessionId, moduleId });
+    const existingProgress = await Progress.findOne({ email: normalizedEmail, sessionId, moduleId });
     if (existingProgress && existingProgress.verified) {
       return res.status(400).json({ error: "Module already verified" });
     }
@@ -58,7 +61,7 @@ router.post('/submit-badge', async (req, res) => {
         await existingProgress.save();
     } else {
         await Progress.create({
-            email,
+            email: normalizedEmail,
             sessionId,
             moduleId,
             badgeUrl,
@@ -69,7 +72,7 @@ router.post('/submit-badge', async (req, res) => {
     // 6. Upsert Participant
     if (name) {
       await Participant.findOneAndUpdate(
-        { email },
+        { email: normalizedEmail },
         { name },
         { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
       );
@@ -87,7 +90,8 @@ router.post('/submit-badge', async (req, res) => {
 router.get('/progress/:email/:sessionId', async (req, res) => {
     try {
         const { email, sessionId } = req.params;
-        const progress = await Progress.find({ email, sessionId });
+        const normalizedEmail = email.trim().toLowerCase();
+        const progress = await Progress.find({ email: normalizedEmail, sessionId });
         
         const session = await Session.findOne({ sessionId });
         if (!session) return res.status(404).json({ error: "Session not found" });
